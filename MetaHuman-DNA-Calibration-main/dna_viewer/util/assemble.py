@@ -1,5 +1,3 @@
-from typing import Any, Dict, List
-
 from ..builder.scene import Scene, SceneResult
 from ..config.aas import AdditionalAssemblyScript
 from ..config.character import Character
@@ -11,60 +9,24 @@ from ..model.dna import DNA
 
 
 def assemble_rig(
-    dna: DNA,
-    analog_gui_path: str,
-    gui_path: str = None,
-    gui: Gui = None,
-    aas_path: str = None,
-    aas_fn: str = "run_after_assemble",
-    aas_params: Dict[str, Any] = None,
-    with_attributes_on_root_joint: bool = False,
-    with_key_frames: bool = False,
-    add_mesh_name_to_blend_shape_channel_name: bool = True,
-) -> SceneResult:
-    """
-    Used for assembling the rig with the following parameters
+    dna,
+    analog_gui_path,
+    gui_path = None,
+    gui = None,
+    aas_path = None,
+    aas_fn = "run_after_assemble",
+    aas_params= None,
+    with_attributes_on_root_joint = False,
+    with_key_frames = False,
+    add_mesh_name_to_blend_shape_channel_name = True):
 
-    @type dna: DNA
-    @param dna: Instance of DNA
 
-    @type gui_path: str
-    @param gui_path: The file location of the gui
-
-    @type gui: Gui
-    @param gui: The gui configuration, this can be used instead of gui_path for finer control
-
-    @type analog_gui_path: str
-    @param analog_gui_path: The file location of the analog gui
-
-    @type aas_path: str
-    @param aas_path: The file location of the additional assembly script
-
-    @type aas_fn: str
-    @param aas_fn: The method name called from the additional assembly script (default is "run_after_assemble")
-
-    @type aas_params: str
-    @param aas_params: The parameters dictionary that will get passed to the provided method name called from the additional assembly script (default is None)
-
-    @type with_attributes_on_root_joint: bool
-    @param with_attributes_on_root_joint: A flag used for adding attributes on the root joint (default is False)
-
-    @type with_key_frames: bool
-    @param with_key_frames: A flag used for adding key frames (default is False)
-
-    @type add_mesh_name_to_blend_shape_channel_name: bool
-    @param add_mesh_name_to_blend_shape_channel_name: A flag representing whether mash name of blend shape channel is added to name when creating it
-
-    @rtype: SceneResult
-    @returns: A SceneResult object representing the info about the finished build process
-    """
-
-    meshes: List[int] = list(range(dna.get_mesh_count()))
+    meshes = list(range(dna.get_mesh_count()))
 
     rig_logic = RigLogic()
     if add_mesh_name_to_blend_shape_channel_name:
         rig_logic.with_blend_shape_naming(
-            f"<objName>{BLEND_SHAPE_NAME_POSTFIX}.<objName>__<attrName>"
+            "<objName>"+str(BLEND_SHAPE_NAME_POSTFIX)+".<objName>__<attrName>"
         )
 
     character_config = (

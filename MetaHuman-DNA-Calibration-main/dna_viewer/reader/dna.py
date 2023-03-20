@@ -9,11 +9,11 @@ from ..model.geometry import Mesh
 print("start")
 from ..reader.behavior import Behavior as BehaviorReader #
 print("end")
-# from ..reader.definition import Definition as DefinitionReader #
-# from ..reader.descriptor import Descriptor as DescriptorReader #
-# from ..reader.geometry import Geometry as GeometryReader #
-# from ..util.reader import Reader # 
-# from ..util.reference import set_geometry_reader #
+from ..reader.definition import Definition as DefinitionReader #
+from ..reader.descriptor import Descriptor as DescriptorReader #
+from ..reader.geometry import Geometry as GeometryReader
+from ..util.reader import Reader 
+from ..util.reference import set_geometry_reader
 
 
 # def load_dna(dna_path: str = None) -> DNAModel:
