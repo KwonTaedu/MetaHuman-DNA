@@ -1,36 +1,17 @@
-from typing import Optional
-
-from dna import BinaryStreamReader
-
+print("1")
+#from dna import BinaryStreamReader
+print("2")
 from ..model.behavior import AnimatedMapsData
 from ..model.behavior import Behavior as BehaviorModel
 from ..model.behavior import BlendShapesData, ConditionalTable, JointGroup, PSDMatrix
 
-
+print("HI")
 class Behavior:
-    """
-    A class used for reading the behavior part of the DNA file
-
-    Attributes
-    ----------
-    @type reader: BinaryStreamReader
-    @param reader: The stream reader being used
-
-    @type behavior: BehaviorModel
-    @param behavior: The object that holds the behavior data read from the DNA file
-    """
-
-    def __init__(self, stream_reader: BinaryStreamReader) -> None:
+    def __init__(self,stream_reader):
         self.reader = stream_reader
-        self.behavior: Optional[BehaviorModel] = None
+        self.behavior = None
 
-    def read(self) -> BehaviorModel:
-        """
-        Starts reading in the behavior part of the DNA
-
-        @rtype: BehaviorModel
-        @returns: the instance of the created behavior model
-        """
+    def read(self):
 
         self.behavior = BehaviorModel()
         self.add_gui_to_raw()
@@ -40,9 +21,8 @@ class Behavior:
         self.add_animated_maps()
         return self.behavior
 
-    def add_gui_to_raw(self) -> None:
-        """Reads in the gui to raw mapping"""
-
+    def add_gui_to_raw(self):
+        
         self.behavior.gui_to_raw = ConditionalTable(
             inputs=self.reader.getGUIToRawInputIndices(),
             outputs=self.reader.getGUIToRawOutputIndices(),
@@ -52,9 +32,7 @@ class Behavior:
             cut_values=self.reader.getGUIToRawCutValues(),
         )
 
-    def add_psd(self) -> None:
-        """Reads in the PSD part of the behavior"""
-
+    def add_psd(self):
         self.behavior.psd = PSDMatrix(
             count=self.reader.getPSDCount(),
             rows=self.reader.getPSDRowIndices(),
@@ -62,8 +40,7 @@ class Behavior:
             values=self.reader.getPSDValues(),
         )
 
-    def add_joints(self) -> None:
-        """Reads in the joints part of the behavior"""
+    def add_joints(self):
 
         self.behavior.joints.joint_row_count = self.reader.getJointRowCount()
         self.behavior.joints.joint_column_count = self.reader.getJointColumnCount()
@@ -82,18 +59,14 @@ class Behavior:
                 )
             )
 
-    def add_blend_shapes(self) -> None:
-        """Reads in the blend shapes part of the behavior"""
-
+    def add_blend_shapes(self):
         self.behavior.blend_shapes = BlendShapesData(
             lods=self.reader.getBlendShapeChannelLODs(),
             inputs=self.reader.getBlendShapeChannelInputIndices(),
             outputs=self.reader.getBlendShapeChannelOutputIndices(),
         )
 
-    def add_animated_maps(self) -> None:
-        """Reads in the animated maps part of the behavior"""
-
+    def add_animated_maps(self):
         self.behavior.animated_maps = AnimatedMapsData(
             lods=self.reader.getAnimatedMapLODs(),
             conditional_table=ConditionalTable(
