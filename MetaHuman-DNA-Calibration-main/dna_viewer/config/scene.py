@@ -1,150 +1,53 @@
-import pathlib
-from dataclasses import dataclass, field
-from typing import List, Optional
+import os
 
 from ..config.character import Character
 from .units import AngleUnit, LinearUnit, Unit
 
 
-@dataclass
 class SaveOptions:
-    """
-    A class used to represent the save options
+    def __init__(self,name=None, extension=None, destination_path = str(os.getcwd())):
+        self.name = name
+        self.extension = extension
+        self.destination_path = destination_path
 
-    Attributes
-    ----------
-    @type name: str
-    @param name: The name of the scene
+    def get_path(self):
+        return self.destination_path+"/"+self.name+"."+self.extension
 
-    @type extension: str
-    @param extension: The extension
-
-    @type destination_path: str
-    @param destination_path: The location where the scene should be saved, if no value provided it defaults to the current working directory
-    """
-
-    name: str = field(default=None)
-    extension: str = field(default=None)
-    destination_path: str = field(default=str(pathlib.Path.cwd()))
-
-    def get_path(self) -> str:
-        """
-        Returns the file path
-
-        @rtype: str
-        @returns: The file path
-        """
-        return f"{self.destination_path}/{self.name}.{self.extension}"
-
-
-@dataclass
 class Scene:
-    """
-    A class used to represent the scene config
+    def __init__(self,dna_path=None, characters= [], units = Unit(),create_new_scene = True,save_options = None):
+        self.dna_path = dna_path
+        self.characters = characters
+        self.units = units
+        self.create_new_scene = create_new_scene
+        self.save_options = save_options
 
-    Attributes
-    ----------
-    @type dna_path: str
-    @param dna_path: The location of the DNA file
-
-    @type characters: List[Character]
-    @param characters: The list of character configuration objects that need to be processed for the scene
-
-    @type units: Unit
-    @param units: The configuration containing the units for the scene
-
-    @type create_new_scene: bool
-    @param create_new_scene: A flag representing whether a new should be created when the build process starts
-
-    @type save_options: SaveOptions
-    @param save_options: A flag representing whether the created meshes should be assigned to a display layer
-    """
-
-    dna_path: str = field(default=None)
-    characters: List[Character] = field(default_factory=list)
-    units: Unit = field(default_factory=Unit)
-    create_new_scene: bool = field(default=True)
-    save_options: Optional[SaveOptions] = field(default=None)
-
-    def with_character(self, character: Character) -> "Scene":
-        """
-        Adds a character to the list of characters that need to be processed
-
-        @type character: Character
-        @param character: The character configuration object
-
-        @rtype: Scene
-        @returns: The instance of the changed object
-        """
+    def with_character(self, character):
 
         self.characters.append(character)
         return self
 
-    def with_linear_unit(self, unit: LinearUnit) -> "Scene":
-        """
-        Set the linear unit for the scene
-
-        @type unit: str
-        @param unit: The linear unit name
-
-        @rtype: Scene
-        @returns: The instance of the changed object
-        """
+    def with_linear_unit(self, unit):
 
         self.units.linear_unit = unit
         return self
 
-    def with_angle_unit(self, unit: AngleUnit) -> "Scene":
-        """
-        Set the angle unit for the scene
-
-        @type unit: str
-        @param unit: The angle unit name
-
-        @rtype: Scene
-        @returns: The instance of the changed object
-        """
+    def with_angle_unit(self, unit) :
         self.units.angle_unit = unit
         return self
 
-    def with_create_new_scene(self, create_new_scene: bool) -> "Scene":
-        """
-        Set the flag representing whether a new should be created when the build process starts
-
-        @type create_new_scene: bool
-        @param create_new_scene: The flag representing whether a new should be created when the build process starts
-
-        @rtype: Scene
-        @returns: The instance of the changed object
-        """
-
+    def with_create_new_scene(self, create_new_scene):
         self.create_new_scene = create_new_scene
         return self
 
     def with_scene_file_path(
         self,
-        name: str = "untitled_scene",
-        extension: str = "mb",
-        destination_path: str = None,
-    ) -> "Scene":
-        """
-        Set the scene save configuration
-
-        @type name: str
-        @param name: The name of the scene
-
-        @type extension: str
-        @param extension: The extension
-
-        @type destination_path: str
-        @param destination_path: The location where the scene should be saved
-
-        @rtype: Scene
-        @returns: The instance of the changed object
-        """
+        name = "untitled_scene",
+        extension = "mb",
+        destination_path = None,
+    ):
 
         if destination_path is None:
-            destination_path = str(pathlib.Path.cwd())
+            destination_path = str(os.getcwd())
 
         self.save_options = SaveOptions(
             name=name, extension=extension, destination_path=destination_path

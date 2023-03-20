@@ -1,11 +1,11 @@
 import logging
 
-from ..builder.maya_mesh import MayaMesh as MayaMeshBuilder #
+from ..builder.maya_mesh import MayaMesh as MayaMeshBuilder
 from ..config.character import BuildOptions, Character, SpaceModifiers
-from ..config.mesh import Mesh as MeshConfig #
+from ..config.mesh import Mesh as MeshConfig
 from ..model.dna import DNA
-from ..util.mesh_skin import MeshSkin #
-from ..util.reference import get_geometry_reader #
+from ..util.mesh_skin import MeshSkin
+from ..util.reference import get_geometry_reader
 
 
 class Mesh:

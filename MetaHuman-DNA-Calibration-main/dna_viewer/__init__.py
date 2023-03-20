@@ -1,7 +1,7 @@
 print("start55")
 from .config.character import BuildOptions
 print("character end")
-from .reader.dna import load_dna #
+#from .reader.dna import load_dna #
 from .ui.dna_viewer_window import show_dna_viewer_window#
 # from .util.assemble import assemble_rig #
 # from .util.mesh import ( #

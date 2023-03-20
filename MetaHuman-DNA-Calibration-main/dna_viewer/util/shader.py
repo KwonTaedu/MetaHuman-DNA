@@ -7,14 +7,12 @@ from ..util.error import DNAViewerError
 
 class Shader:
     @staticmethod
-    def default_lambert_shader(
-        mesh_name: str, character_name: str = None, create_character_node: bool = False
-    ) -> None:
+    def default_lambert_shader(mesh_name, character_name = None, create_character_node = False):
         try:
             if create_character_node:
-                names = cmds.ls(f"*|{mesh_name}", l=True)
+                names = cmds.ls(("*|"+mesh_name), l=True)
                 name = [
-                    item for item in names if item.startswith(f"|{character_name}")
+                    item for item in names if item.startswith("|"+str(character_name))
                 ][0]
                 cmds.select(name, r=True)
             else:
@@ -24,6 +22,6 @@ class Shader:
 
         except Exception as e:
             logging.error(
-                f"Couldn't set lambert shader for mesh {mesh_name}. Reason: {e}"
+                "Couldn't set lambert shader for mesh"+mesh_name+". Reason: "+e
             )
             raise DNAViewerError(e) from e

@@ -1,5 +1,4 @@
 import logging
-from typing import List, Tuple
 
 from maya import cmds
 
@@ -14,7 +13,7 @@ class MeshSkin:
     def prepare_joints(dna, mesh_index):
 
         joints = dna.read_all_neutral_joints()
-        joints_temp: List[int] = []
+        joints_temp = []
         joint_indices = dna.get_all_skin_weights_joint_indices_for_mesh(mesh_index)
 
         joint_ids = []
@@ -38,7 +37,6 @@ class MeshSkin:
     @staticmethod
     def add_skin_cluster(dna, mesh_index, mesh_name, joint_names):
 
-
         logging.info("adding skin cluster...")
         maximum_influences = dna.get_maximum_influence_per_vertex(mesh_index)
 
@@ -60,26 +58,25 @@ class MeshSkin:
     @staticmethod
     def set_skin_weights(dna, mesh_index, mesh_name, joint_ids):
 
-
         logging.info("setting skin weights...")
         skin_weights = dna.get_skin_weight_matrix_for_mesh(mesh_index)
 
         # import skin weights
-        temp_str = f"{mesh_name}_{SKIN_CLUSTER_AFFIX}.wl["
+        temp_str = mesh_name+"_"+SKIN_CLUSTER_AFFIX+".wl["
         for vertex_id, skin_weight in enumerate(skin_weights):
             if not (vertex_id + 1) % SKIN_WEIGHT_PRINT_RANGE:
-                logging.info(f"\t{vertex_id + 1} / {len(skin_weights)}")
+                logging.info(str(int(vertex_id) + 1)+" / "+len(skin_weights))
             vertex_infos = skin_weight
 
             # set all skin weights to zero
-            vertex_string = f"{temp_str}{str(vertex_id)}].w["
-            cmds.setAttr(f"{vertex_string}0]", 0.0)
+            vertex_string = temp_str+str(vertex_id)+"].w["
+            cmds.setAttr(vertex_string+"0]", 0.0)
 
             # import skin weights
             for vertex_info in vertex_infos:
                 cmds.setAttr(
-                    f"{vertex_string}{str(joint_ids.index(vertex_info[0]))}]",
+                    vertex_string+str(joint_ids.index(vertex_info[0]))+"]",
                     float(vertex_info[1]),
                 )
         if len(skin_weights) % SKIN_WEIGHT_PRINT_RANGE != 0:
-            logging.info(f"\t{len(skin_weights)} / {len(skin_weights)}")
+            logging.info(str(int(skin_weights))+" / "+len(skin_weights))

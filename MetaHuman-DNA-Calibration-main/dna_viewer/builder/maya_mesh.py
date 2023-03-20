@@ -1,5 +1,3 @@
-from typing import List
-
 from maya.api.OpenMaya import MDagModifier, MFnMesh, MObject
 
 from ..config.mesh import Mesh as MeshConfig
@@ -8,26 +6,20 @@ from ..model.mesh import Mesh as MeshModel
 from ..util.mesh_blend_shape import MeshBlendShape
 from ..util.mesh_neutral import MeshNeutral
 from ..util.mesh_normals import MeshNormals
-from ..util.mesh_skin import MeshSkin #
+from ..util.mesh_skin import MeshSkin
  
 
 class MayaMesh:
 
-    def __init__(self, config: MeshConfig, dna: DNA) -> None:
+    def __init__(self, config, dna):
         self.config = config
-        self.data: MeshModel = MeshModel()
-        self.fn_mesh: MFnMesh = None
-        self.mesh_object: MObject = None
-        self.dag_modifier: MDagModifier = None
+        self.data = MeshModel()
+        self.fn_mesh = None
+        self.mesh_object = None
+        self.dag_modifier = None
         self.dna = dna
 
-    def create_neutral_mesh(self) -> MObject:
-        """
-        Creates the neutral mesh using the config provided for this builder class object
-
-        @rtype: om.MObject
-        @returns: the instance of the created mesh object
-        """
+    def create_neutral_mesh(self):
         MeshNeutral.prepare_mesh(self.config, self.dna, self.data)
         self.fn_mesh, self.mesh_object = MeshNeutral.create_mesh_object(
             self.config, self.data
@@ -40,8 +32,7 @@ class MayaMesh:
         )
         return self.mesh_object
 
-    def add_blend_shapes(self, add_mesh_name_to_blend_shape_channel_name: bool) -> None:
-        """Adds blend shapes to the mesh"""
+    def add_blend_shapes(self, add_mesh_name_to_blend_shape_channel_name):
 
         if self.dna.has_blend_shapes(self.config.mesh_index):
             MeshBlendShape.create_all_derived_meshes(
@@ -57,16 +48,7 @@ class MayaMesh:
                 self.data.derived_mesh_names,
             )
 
-    def add_skin(self, joint_names: List[str], joint_ids: List[int]) -> None:
-        """
-        Adds skin to the mesh
-
-        @type joint_names: List[str]
-        @param joint_names: Joint names needed for adding the skin cluster
-
-        @type joint_ids: List[int]
-        @param joint_ids: Joint indices needed for setting skin weights
-        """
+    def add_skin(self, joint_names, joint_ids):
 
         mesh_name = self.dna.get_mesh_name(self.config.mesh_index)
 
@@ -77,7 +59,6 @@ class MayaMesh:
             self.dna, self.config.mesh_index, mesh_name, joint_ids
         )
 
-    def add_normals(self) -> None:
-        """Add normals to the mesh"""
+    def add_normals(self):
 
         MeshNormals.add_normals(self.config, self.dna, self.data, self.fn_mesh)

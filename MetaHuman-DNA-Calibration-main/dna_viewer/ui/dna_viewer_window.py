@@ -24,14 +24,13 @@ from ..const.ui import (
     WINDOW_SIZE_WIDTH_MIN,
     WINDOW_TITLE,
 )
+from .widgets import QHLine
 print("Scene")
-from ..builder.scene import Scene # << ing
-print("Scene end")
+
 from ..reader.dna import DNA # 
 from ..ui.elements import Elements # 
 from ..ui.elements_creator import ElementsCreator # 
-from .widgets import QHLine
-
+from ..builder.scene import Scene # << import 
 
 print("ui import end")
 def show_dna_viewer_window() -> None:
