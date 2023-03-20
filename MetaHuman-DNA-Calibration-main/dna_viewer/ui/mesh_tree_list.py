@@ -1,5 +1,3 @@
-from typing import List
-
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import (
     QGridLayout,
@@ -16,17 +14,8 @@ from ..ui.elements import Elements
 
 
 class MeshTreeList(QWidget):
-    """
-    A custom widget that lists out meshes with checkboxes next to them, so these meshes can be selected to be processed. The meshes are grouped by LOD
 
-    @type elements: Elements
-    @param elements: The object containing references to the UI elements
-
-    @type mesh_tree: QWidget
-    @param mesh_tree: The widget that contains the meshes to be selected in a tree list
-    """
-
-    def __init__(self, elements: Elements) -> None:
+    def __init__(self, elements):
         super().__init__()
         self.elements = elements
 
@@ -44,13 +33,7 @@ class MeshTreeList(QWidget):
 
         self.setLayout(layout_holder)
 
-    def create_mesh_tree(self) -> QWidget:
-        """
-        Creates the mesh tree list widget
-
-        @rtype: QWidget
-        @returns: The created widget
-        """
+    def create_mesh_tree(self):
 
         mesh_tree = QTreeWidget()
         mesh_tree.setHeaderHidden(True)
@@ -58,22 +41,12 @@ class MeshTreeList(QWidget):
         mesh_tree.setStyleSheet("background-color: #505050")
         return mesh_tree
 
-    def fill_mesh_list(self, lod_count: int, meshes: NamesAndIndices) -> None:
-        """
-        Fills the mesh list with the meshes, and groups them by lods
-
-        @type lod_count: int
-        @param lod_count: The LOD count
-
-        @type meshes: NamesAndIndices
-        @param meshes: The names and indices of all the meshes
-        """
-
+    def fill_mesh_list(self, lod_count, meshes):
         self.mesh_tree.clear()
 
         for i in range(lod_count):
             parent = QTreeWidgetItem(self.mesh_tree)
-            parent.setText(0, f"LOD {i}")
+            parent.setText(0, "LOD "+str(i))
             parent.setFlags(parent.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
 
             meshes_in_lod = meshes.indices_for_lod[i]
@@ -81,18 +54,12 @@ class MeshTreeList(QWidget):
             for mesh_index in meshes_in_lod:
                 child = QTreeWidgetItem(parent)
                 child.setFlags(child.flags() | Qt.ItemIsUserCheckable)
-                child.setText(0, f"{meshes.names[mesh_index]}")
+                child.setText(0, str(meshes.names[mesh_index]))
                 child.setCheckState(0, Qt.Unchecked)
 
             self.mesh_tree.setItemExpanded(parent, True)
 
-    def get_selected_meshes(self) -> List[int]:
-        """
-        Gets the selected meshes from the tree widget
-
-        @rtype: List[int]
-        @returns: The list of mesh indices that are selected
-        """
+    def get_selected_meshes(self):
 
         meshes = []
 
@@ -110,9 +77,7 @@ class MeshTreeList(QWidget):
 
         return meshes
 
-    def tree_item_changed(self) -> None:
-        """The method that gets called when a tree item gets its value changed"""
-
+    def tree_item_changed(self):
         meshes = self.get_selected_meshes()
 
         if meshes:

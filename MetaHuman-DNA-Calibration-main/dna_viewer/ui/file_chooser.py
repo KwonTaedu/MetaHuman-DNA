@@ -1,5 +1,3 @@
-from typing import Callable, Optional
-
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import (
     QFileDialog,
@@ -12,24 +10,18 @@ from PySide2.QtWidgets import (
 
 
 class FileChooser(QWidget):
-    """
-    A custom widget used for selecting a file path using a FileDialog and an input field
-
-    @type fc_text_field: QLineEdit
-    @param fc_text_field: The input text field for storing the result path
-    """
 
     def __init__(
         self,
-        label_text: str,
-        parent: Optional[QWidget] = None,
-        placeholder: str = "",
-        dialog_caption: str = "Select a file",
-        dialog_filter: str = "All files (*.*)",
-        button_text: str = "...",
-        dir_selector: bool = False,
-        on_changed: Callable[[int], None] = None,
-    ) -> None:
+        label_text,
+        parent= None,
+        placeholder= "",
+        dialog_caption = "Select a file",
+        dialog_filter= "All files (*.*)",
+        button_text = "...",
+        dir_selector = False,
+        on_changed = None,
+    ):
         super().__init__(parent=parent)
 
         self._dialog_caption = dialog_caption
@@ -59,19 +51,10 @@ class FileChooser(QWidget):
 
         self.setLayout(layout)
 
-    def get_file_path(self) -> str:
-        """
-        Gets the file path from the text field
-
-        @rtype: str
-        @returns: The file path contained in the text field
-        """
-
+    def get_file_path(self):
         return str(self.fc_text_field.text())
 
-    def open_dialog(self) -> None:
-        """Opens a file dialog, when a path is chosen, the text field gets filled with its value"""
-
+    def open_dialog(self):
         if self._dir_selector:
             file_name, _ = QFileDialog.getExistingDirectory(
                 self,

@@ -1,32 +1,16 @@
-from enum import Enum
-from typing import Callable
-
 from PySide2.QtWidgets import QCheckBox, QHBoxLayout, QLabel, QWidget
 
 from ..ui.elements import Elements
 
 
-class Checkbox(Enum):
+class Checkbox:
     unchecked = 0
     checked = 2
 
 
 class BuildOptionsWidget(QWidget):
-    """
-    Widget containing build options checkboxes
 
-    Attributes
-    ----------
-    @type elements: Elements
-    @param elements: The object containing references to the UI elements
-
-    @type layout: QHBoxLayout
-    @param layout: The layout containing the build options checkboxes
-    """
-
-    def __init__(
-        self, elements: Elements, on_generic_changed: Callable[[int], None]
-    ) -> None:
+    def __init__(self, elements, on_generic_changed):
         super().__init__()
 
         self.elements = elements
@@ -50,29 +34,10 @@ class BuildOptionsWidget(QWidget):
 
     def create_checkbox(
         self,
-        label: str,
-        on_changed: Callable[[int], None] = None,
-        checked: bool = False,
-        enabled: bool = False,
-    ) -> QCheckBox:
-        """
-        Adds a checkbox with given parameters and connects them to the on_changed method
-
-        @type label: str
-        @param label: The label of the checkbox
-
-        @type on_changed: Callable[[int], None]
-        @param on_changed: The method that will get called when the checkbox changes states
-
-        @type checked: bool
-        @param checked: The value representing if the checkbox is checked after creation
-
-        @type enabled: bool
-        @param enabled: The value representing if the checkbox is enabled after creation
-
-        @rtype: QCheckBox
-        @returns: the created checkbox object
-        """
+        label,
+        on_changed = None,
+        checked = False,
+        enabled = False):
 
         checkbox = QCheckBox(label, self)
         checkbox.setChecked(checked)
@@ -82,13 +47,7 @@ class BuildOptionsWidget(QWidget):
         self.layout.addWidget(checkbox)
         return checkbox
 
-    def on_joints_changed(self, state: int) -> None:
-        """
-        Method that gets called when the joints checkbox is changed
-
-        @type state: int
-        @param state: The changed state of the checkbox
-        """
+    def on_joints_changed(self, state):
 
         if state == Checkbox.checked.value:
             self.elements.process_btn.setEnabled(True)

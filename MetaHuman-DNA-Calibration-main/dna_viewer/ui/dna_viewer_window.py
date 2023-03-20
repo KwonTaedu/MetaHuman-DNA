@@ -27,8 +27,8 @@ from ..const.ui import (
 from .widgets import QHLine
 print("Scene")
 
+from ..ui.elements import Elements
 from ..reader.dna import DNA # 
-from ..ui.elements import Elements # 
 from ..ui.elements_creator import ElementsCreator # 
 from ..builder.scene import Scene # << import 
 
