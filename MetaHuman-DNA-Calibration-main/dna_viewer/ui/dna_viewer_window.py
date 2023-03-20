@@ -2,10 +2,9 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from maya.cmds import confirmDialog
+# from maya.cmds import confirmDialog message
 from PySide2 import QtCore, QtWidgets
 
-from ..builder.scene import Scene
 from ..config.aas import AdditionalAssemblyScript
 from ..config.analog_gui import AnalogGui
 from ..config.character import Character
@@ -25,35 +24,21 @@ from ..const.ui import (
     WINDOW_SIZE_WIDTH_MIN,
     WINDOW_TITLE,
 )
-from ..reader.dna import DNA
-from ..ui.elements import Elements
-from ..ui.elements_creator import ElementsCreator
+print("Scene")
+from ..builder.scene import Scene # << ing
+print("Scene end")
+from ..reader.dna import DNA # 
+from ..ui.elements import Elements # 
+from ..ui.elements_creator import ElementsCreator # 
 from .widgets import QHLine
 
 
+print("ui import end")
 def show_dna_viewer_window() -> None:
     DnaViewerWindow.show_window()
 
 
 class DnaViewerWindow(QtWidgets.QMainWindow):
-    """
-    UI Window
-
-    Attributes
-    ----------
-    @type elements: Elements
-    @param elements: The object containing references to the UI elements
-
-    @type elements_creator: ElementsCreator
-    @param elements_creator: The class used for creating UI elements
-
-    @type build_scene_successful: bool
-    @param build_scene_successful: A flag representing if building of the scene was a success
-
-    @type character_config: Character
-    @param character_config: The character configuration that will be processed
-    """
-
     window: QtWidgets.QMainWindow = None
 
     def __init__(self, parent: QtWidgets.QWidget = None) -> None:
@@ -201,7 +186,7 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         except Exception as e:
             self.set_progress(text="Processing failed", value=100)
             logging.error(e)
-            confirmDialog(message=e, button=["ok"], icon="critical")
+            # confirmDialog(message=e, button=["ok"], icon="critical")
 
     @staticmethod
     def show_window() -> None:

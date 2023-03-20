@@ -1,55 +1,26 @@
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
-
 from ..config.units import AngleUnit, LinearUnit
 from ..model.behavior import Behavior
 from ..model.definition import Definition
-from ..model.descriptor import Descriptor
-from ..model.geometry import UV, BlendShape, Geometry, Layout, Mesh, Point3
-from ..model.joint import Joint
+from ..model.descriptor import Descriptor 
+from ..model.geometry import UV, BlendShape, Geometry, Layout, Mesh, Point3 
+from ..model.joint import Joint 
 from ..util.conversion import Conversion
 from ..util.error import DNAViewerError
 
-
-@dataclass
 class BaseDNA:
-    """
-    A model class for holding data about the DNA
-
-    Attributes
-    ----------
-    @type descriptor: Descriptor
-    @param descriptor: Data representing the descriptor part of the DNA
-
-    @type definition: Definition
-    @param definition: Data representing the definition part of the DNA
-
-    @type behavior: Behavior
-    @param behavior: Data representing the behavior part of the DNA
-
-    @type geometry: Geometry
-    @param geometry: Data representing the geometry part of the DNA
-    """
-
-    descriptor: Optional[Descriptor] = field(default=None)
-    definition: Optional[Definition] = field(default=None)
-    behavior: Optional[Behavior] = field(default=None)
-    geometry: Optional[Geometry] = field(default=None)
-
+    def __init__(self,descriptor=None,definition=None,behavior=None,geometry=None):
+        self.descriptor = descriptor
+        self.definition = definition
+        self.behavior = behavior
+        self.geometry = geometry
+  
 
 class DNA(BaseDNA):
-    """
-    Used for getting data stored in the models
-
-    @type path: str
-    @param path: The path to the DNA file
-    """
-
-    def __init__(self, path: str) -> None:
+    def __init__(self, path):
         super().__init__()
         self.path = path
 
-    def read_all_neutral_joints(self) -> List[Joint]:
+    def read_all_neutral_joints(self):
         joints = []
 
         for i, name in enumerate(self.definition.joints.names):
@@ -70,20 +41,16 @@ class DNA(BaseDNA):
 
         return joints
 
-    def get_all_skin_weights_joint_indices_for_mesh(
-        self, mesh_index: int
-    ) -> List[List[int]]:
+    def get_all_skin_weights_joint_indices_for_mesh(self, mesh_index):
         return self.geometry.meshes[mesh_index].skin_weights.joint_indices
 
-    def get_blend_shape_target_deltas_with_vertex_id(
-        self, mesh_index: int, blend_shape_target_index: int
-    ) -> List[Tuple[int, Point3]]:
+    def get_blend_shape_target_deltas_with_vertex_id(self, mesh_index, blend_shape_target_index):
         blend_shape = self.geometry.meshes[mesh_index].blend_shapes[
             blend_shape_target_index
         ]
         indices = list(blend_shape.deltas.keys())
 
-        deltas: List[Point3] = []
+        deltas = []
         for i in indices:
             deltas.append(blend_shape.deltas[i])
 
@@ -92,9 +59,7 @@ class DNA(BaseDNA):
 
         return list(zip(indices, deltas))
 
-    def get_all_skin_weights_values_for_mesh(
-        self, mesh_index: int
-    ) -> List[List[float]]:
+    def get_all_skin_weights_values_for_mesh(self, mesh_index):
         skin_weight_values = []
         mesh = self.geometry.meshes[mesh_index]
         for i in range(len(mesh.topology.positions)):
@@ -102,9 +67,7 @@ class DNA(BaseDNA):
 
         return skin_weight_values
 
-    def get_skin_weight_matrix_for_mesh(
-        self, mesh_index: int
-    ) -> List[List[Tuple[int, float]]]:
+    def get_skin_weight_matrix_for_mesh(self, mesh_index):
         vertex_position_count = len(self.geometry.meshes[mesh_index].topology.positions)
 
         joint_indices = self.get_all_skin_weights_joint_indices_for_mesh(mesh_index)
@@ -136,36 +99,28 @@ class DNA(BaseDNA):
             weight_matrix.append(vertex_weights)
         return weight_matrix
 
-    def get_vertex_texture_coordinates_for_mesh(self, mesh_index: int) -> List[UV]:
+    def get_vertex_texture_coordinates_for_mesh(self, mesh_index):
         return self.geometry.meshes[mesh_index].topology.texture_coordinates
 
-    def get_vertex_normals_for_mesh(self, mesh_index: int) -> List[Point3]:
+    def get_vertex_normals_for_mesh(self, mesh_index):
         return self.geometry.meshes[mesh_index].topology.normals
 
-    def get_raw_control_names(self) -> List[str]:
+    def get_raw_control_names(self):
         return self.definition.raw_control_names
 
-    def get_animated_map_names(self) -> List[str]:
+    def get_animated_map_names(self):
         return self.definition.animated_maps.names
 
-    def get_vertex_positions_for_mesh_index(self, mesh_index: int) -> List[Point3]:
+    def get_vertex_positions_for_mesh_index(self, mesh_index):
         return self.geometry.meshes[mesh_index].topology.positions
 
-    def get_vertex_layout_positions_for_mesh_index(self, mesh_index: int) -> List[int]:
-        return [
-            item.position_index
-            for item in self.geometry.meshes[mesh_index].topology.layouts
-        ]
+    def get_vertex_layout_positions_for_mesh_index(self, mesh_index):
+        return [item.position_index for item in self.geometry.meshes[mesh_index].topology.layouts]
 
-    def get_faces(self, mesh_index: int) -> List[List[int]]:
+    def get_faces(self, mesh_index):
         return self.geometry.meshes[mesh_index].topology.face_vertex_layouts
 
-    def get_polygon_faces_and_connects(
-        self,
-        mesh_index: int = None,
-        dna_faces: List[List[int]] = None,
-        dna_vertex_layout_positions: List[int] = None,
-    ) -> Tuple[List[int], List[int]]:
+    def get_polygon_faces_and_connects(self,mesh_index = None,dna_faces = None,dna_vertex_layout_positions= None):
         if mesh_index is None:
             if None in (dna_faces, dna_vertex_layout_positions):
                 raise DNAViewerError(
@@ -189,95 +144,89 @@ class DNA(BaseDNA):
 
         return polygon_faces, polygon_connects
 
-    def get_layouts_for_mesh_index(self, mesh_index: int) -> List[Layout]:
+    def get_layouts_for_mesh_index(self, mesh_index):
         return self.geometry.meshes[mesh_index].topology.layouts
 
-    def get_texture_coordinate_index(self, mesh_index: int, layout_id: int) -> int:
+    def get_texture_coordinate_index(self, mesh_index, layout_id):
+        # type : (int,int) -> None
         return (
             self.geometry.meshes[mesh_index]
             .topology.layouts[layout_id]
             .texture_coordinate_index
         )
 
-    def get_normal_for_mesh_index_and_layout(
-        self, mesh_index: int, layout: Layout
-    ) -> Point3:
+    def get_normal_for_mesh_index_and_layout(self, mesh_index, layout):
         return self.geometry.meshes[mesh_index].topology.normals[layout.normal_index]
 
-    def has_blend_shapes(self, mesh_index: int) -> bool:
-        return (
-            len([bs.channel for bs in self.geometry.meshes[mesh_index].blend_shapes])
-            > 0
-        )
+    def has_blend_shapes(self, mesh_index):
+        return (len([bs.channel for bs in self.geometry.meshes[mesh_index].blend_shapes]) > 0)
 
-    def get_maximum_influence_per_vertex(self, mesh_index: int) -> int:
+    def get_maximum_influence_per_vertex(self, mesh_index):
         return self.geometry.meshes[
             mesh_index
         ].skin_weights.maximum_influence_per_vertex
 
-    def get_blend_shape_name(self, blend_shape_channel: int) -> str:
+    def get_blend_shape_name(self, blend_shape_channel):
         return self.definition.blend_shape_channels.names[blend_shape_channel]
 
-    def get_geometry(self) -> Geometry:
+    def get_geometry(self):
         return self.geometry
 
-    def get_mesh_name(self, mesh_index: int) -> str:
+    def get_mesh_name(self, mesh_index):
         return self.definition.meshes.names[mesh_index]
 
-    def get_mesh_names(self) -> List[str]:
+    def get_mesh_names(self):
         return self.definition.meshes.names
 
-    def get_translation_unit_int(self) -> int:
+    def get_translation_unit_int(self):
         return self.descriptor.translation_unit
 
-    def get_linear_unit(self) -> LinearUnit:
+    def get_linear_unit(self):
         return Conversion.get_linear_unit_from_int(self.get_translation_unit_int())
 
-    def get_angle_unit_int(self) -> int:
+    def get_angle_unit_int(self):
         return self.descriptor.rotation_unit
 
-    def get_angle_unit(self) -> AngleUnit:
+    def get_angle_unit(self):
         return Conversion.get_angle_unit_from_int(self.get_angle_unit_int())
 
-    def get_lod_count(self) -> int:
+    def get_lod_count(self):
         return self.descriptor.lod_count
 
-    def get_mesh_indices_for_lod(self, lod: int) -> List[int]:
+    def get_mesh_indices_for_lod(self, lod):
         return self.definition.meshes.indices_for_lod[lod]
 
-    def get_joint_indices_for_lod(self, lod: int) -> List[int]:
+    def get_joint_indices_for_lod(self, lod):
         return self.definition.joints.indices_for_lod[lod]
 
-    def get_lowest_lod_containing_meshes(
-        self, mesh_indices: List[int]
-    ) -> Optional[int]:
+    def get_lowest_lod_containing_meshes(self, mesh_indices):
         unique_mesh_indices = set(mesh_indices)
         for lod in range(self.get_lod_count()):
             if any(list(unique_mesh_indices & set(self.get_mesh_indices_for_lod(lod)))):
                 return lod
         return None
 
-    def get_character_name(self) -> str:
+    def get_character_name(self):
         return self.descriptor.name
 
-    def get_meshes_by_lods(self, mesh_indices: List[int]) -> List[List[int]]:
+    def get_meshes_by_lods(self, mesh_indices):
         result_list = []
         for lod in range(self.get_lod_count()):
             temp = list(set(mesh_indices) & set(self.get_mesh_indices_for_lod(lod)))
             result_list.append(temp)
         return result_list
 
-    def get_blend_shapes(self, mesh_index: int) -> List[BlendShape]:
+    def get_blend_shapes(self, mesh_index):
         return self.geometry.meshes[mesh_index].blend_shapes
 
-    def get_mesh_data(self, mesh_index: int) -> Mesh:
+    def get_mesh_data(self, mesh_index):
         return self.geometry.meshes[mesh_index]
 
-    def get_mesh_id_from_mesh_name(self, mesh_name: str) -> Optional[int]:
+    def get_mesh_id_from_mesh_name(self, mesh_name):
         for mesh_id, mesh in enumerate(self.geometry.meshes.values()):
             if mesh.name == mesh_name:
                 return mesh_id
         return None
 
-    def get_mesh_count(self) -> int:
+    def get_mesh_count(self):
         return len(self.geometry.meshes.values())

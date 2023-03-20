@@ -2,12 +2,12 @@ import logging
 import traceback
 from typing import List, Optional
 
-from ..builder.character import Character, CharacterBuildResult
-from ..config.scene import Scene as SceneConfig
+from ..builder.character import Character, CharacterBuildResult #
+from ..config.scene import Scene as SceneConfig #
 from ..model.dna import DNA
 from ..util.conversion import Conversion
 from ..util.error import DNAViewerError
-from ..util.scene_builder import SceneBuilder
+from ..util.scene_builder import SceneBuilder #
 
 
 class SceneError(DNAViewerError):

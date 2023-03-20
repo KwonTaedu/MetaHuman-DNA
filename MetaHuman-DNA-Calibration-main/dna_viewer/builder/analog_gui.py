@@ -1,5 +1,3 @@
-from typing import Optional
-
 from maya.api.OpenMaya import MVector
 
 from ..config.analog_gui import AnalogGui as AnalogGuiConfig
@@ -7,24 +5,13 @@ from ..util.error import DNAViewerError
 from ..util.maya_util import Maya
 
 
-class AnalogGui:
-    """
-    A builder class used for manipulating the AnalogGuiConfig used in the character building process
-
-    Attributes
-    ----------
-    @type gui_path: str
-    @param gui_path: The location of the gui file
-    """
-
-    def __init__(self, options: Optional[AnalogGuiConfig] = None) -> None:
+class AnalogGui: 
+    def __init__(self, options= None):
         self.options = options or AnalogGuiConfig()
         self.eye_l_pos = Maya.get_translation(self.options.left_eye_joint_name)
         self.eye_r_pos = Maya.get_translation(self.options.right_eye_joint_name)
 
-    def build(self) -> None:
-        """Start building the analog gui"""
-
+    def build(self):
         if self.options.gui_path is None:
             raise DNAViewerError(
                 "Unable to import analog gui, must provide gui path..."
@@ -33,9 +20,7 @@ class AnalogGui:
         self.add_eyes()
         self.add_eye_locators()
 
-    def add_eyes(self) -> None:
-        """Add eyes to the analog gui"""
-
+    def add_eyes(self):
         Maya.set_translation(
             self.options.central_driver_name,
             Maya.get_translation(self.options.facial_root_joint_name),
@@ -70,9 +55,7 @@ class AnalogGui:
             ),
         )
 
-    def add_eye_locators(self) -> None:
-        """Add eye locators to the analog gui"""
-
+    def add_eye_locators(self):
         eye_l_locator_pos = Maya.get_translation(self.options.le_aim)
         eye_r_locator_pos = Maya.get_translation(self.options.re_aim)
         central_aim_pos = Maya.get_translation(self.options.central_aim)

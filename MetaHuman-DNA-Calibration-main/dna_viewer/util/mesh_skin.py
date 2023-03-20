@@ -9,27 +9,9 @@ from ..model.dna import DNA
 
 
 class MeshSkin:
-    """
-    A utility class used for interacting and adding skin clusters to a mesh
-    """
 
     @staticmethod
-    def prepare_joints(dna: DNA, mesh_index: int) -> Tuple[List[int], List[str]]:
-        """
-        Gets the joint indices and names needed for the given mesh.
-
-        @type dna: DNA
-        @param dna: Instance of DNA.
-
-        @type mesh_index: int
-        @param mesh_index: The index of the mesh.
-
-        @type joints: List[Joint]
-        @param joints: List of all joints from which some of them are selected as a result.
-
-        @rtype: Tuple[List[int], List[str]]
-        @returns: The tuple containing the list of joint indices and the list of joint names.
-        """
+    def prepare_joints(dna, mesh_index):
 
         joints = dna.read_all_neutral_joints()
         joints_temp: List[int] = []
@@ -54,24 +36,8 @@ class MeshSkin:
         return joint_ids, joint_names
 
     @staticmethod
-    def add_skin_cluster(
-        dna: DNA, mesh_index: int, mesh_name: str, joint_names: List[str]
-    ) -> None:
-        """
-        Creates a skin cluster object.
+    def add_skin_cluster(dna, mesh_index, mesh_name, joint_names):
 
-        @type dna: DNA
-        @param dna: Instance of DNA.
-
-        @type mesh_index: int
-        @param mesh_index: The index of the mesh.
-
-        @type mesh_name: str
-        @param mesh_name: The mesh name that is used for skin cluster naming.
-
-        @type joints: List[Joint]
-        @param joints: List of joints used for adding the skin cluster.
-        """
 
         logging.info("adding skin cluster...")
         maximum_influences = dna.get_maximum_influence_per_vertex(mesh_index)
@@ -81,7 +47,7 @@ class MeshSkin:
         cmds.select(mesh_name, add=True)
         skin_cluster = cmds.skinCluster(
             toSelectedBones=True,
-            name=f"{mesh_name}_{SKIN_CLUSTER_AFFIX}",
+            name=mesh_name+"_"+SKIN_CLUSTER_AFFIX,
             maximumInfluences=maximum_influences,
             skinMethod=0,
             obeyMaxInfluences=True,
@@ -92,24 +58,8 @@ class MeshSkin:
             )
 
     @staticmethod
-    def set_skin_weights(
-        dna: DNA, mesh_index: int, mesh_name: str, joint_ids: List[int]
-    ) -> None:
-        """
-        Sets the skin weights attributes.
+    def set_skin_weights(dna, mesh_index, mesh_name, joint_ids):
 
-        @type dna: DNA
-        @param dna: Instance of DNA.
-
-        @type mesh_index: int
-        @param mesh_index: The index of the mesh.
-
-        @type mesh_name: str
-        @param mesh_name: The mesh name that is used for getting the skin cluster name.
-
-        @type joint_ids: List[int]
-        @param joint_ids: List of joint indices used for setting the skin weight attribute.
-        """
 
         logging.info("setting skin weights...")
         skin_weights = dna.get_skin_weight_matrix_for_mesh(mesh_index)

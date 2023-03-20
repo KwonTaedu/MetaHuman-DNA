@@ -7,12 +7,12 @@ from ..model.descriptor import Descriptor as DescriptorModel
 from ..model.dna import DNA as DNAModel
 from ..model.geometry import Geometry as GeometryModel
 from ..model.geometry import Mesh
-from ..reader.behavior import Behavior as BehaviorReader
-from ..reader.definition import Definition as DefinitionReader
-from ..reader.descriptor import Descriptor as DescriptorReader
-from ..reader.geometry import Geometry as GeometryReader
-from ..util.reader import Reader
-from ..util.reference import set_geometry_reader
+from ..reader.behavior import Behavior as BehaviorReader #
+from ..reader.definition import Definition as DefinitionReader #
+from ..reader.descriptor import Descriptor as DescriptorReader #
+from ..reader.geometry import Geometry as GeometryReader #
+from ..util.reader import Reader # 
+from ..util.reference import set_geometry_reader #
 
 
 def load_dna(dna_path: str = None) -> DNAModel:

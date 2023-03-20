@@ -1,5 +1,4 @@
 import logging
-from typing import List, Tuple
 
 from maya import cmds
 from maya.api.OpenMaya import MDagModifier, MFnMesh, MObject, MPoint
@@ -10,27 +9,9 @@ from ..model.mesh import Mesh as MeshModel
 
 
 class MeshNeutral:
-    """
-    A utility class used for creating and interacting with meshes
-    """
 
     @staticmethod
-    def get_vertex_positions_from_dna_vertex_positions(
-        config: MeshConfig, data: MeshModel
-    ) -> List[MPoint]:
-        """
-        Gets a list of points that represent the vertex positions.
-
-        @type config: MeshConfig
-        @param config: Mesh configuration from the DNA.
-
-        @type data: MeshModel
-        @param data: An object that stores values that get passed around different methods.
-
-        @rtype: List[MPoint]
-        @returns: List of maya point objects.
-        """
-
+    def get_vertex_positions_from_dna_vertex_positions(config, data):
         vertex_positions = []
         for position in data.dna_vertex_positions:
             vertex_positions.append(
@@ -43,19 +24,10 @@ class MeshNeutral:
         return vertex_positions
 
     @staticmethod
-    def prepare_mesh(config: MeshConfig, dna: DNA, data: MeshModel) -> None:
-        """
-        Gets a list of points that represent the vertex positions.
-
-        @type config: MeshConfig
-        @param config: Mesh configuration from the DNA.
-
-        @type data: MeshModel
-        @param data: An object that stores values that get passed around different methods.
-        """
+    def prepare_mesh(config, dna, data):
 
         logging.info("==============================")
-        logging.info(f"building mesh with mesh_index: {config.mesh_index}")
+        logging.info("building mesh with mesh_index:"+config.mesh_index)
 
         data.dna_vertex_positions = dna.get_vertex_positions_for_mesh_index(
             config.mesh_index
@@ -70,22 +42,7 @@ class MeshNeutral:
         ) = dna.get_polygon_faces_and_connects(config.mesh_index)
 
     @staticmethod
-    def create_mesh_object(
-        config: MeshConfig, data: MeshModel
-    ) -> Tuple[MFnMesh, MObject]:
-        """
-        Gets a list of points that represent the vertex positions.
-
-        @type config: MeshConfig
-        @param config: Mesh configuration from the DNA.
-
-        @type data: MeshModel
-        @param data: An object that stores values that get passed around different methods.
-
-        @rtype: Tuple[MFnMesh, MObject]
-        @returns: Maya objects representing maya mesh functions and the created maya mesh object.
-        """
-
+    def create_mesh_object(config, data):
         fn_mesh = MFnMesh()
 
         mesh_object = fn_mesh.create(
@@ -97,22 +54,9 @@ class MeshNeutral:
         return fn_mesh, mesh_object
 
     @staticmethod
-    def rename_mesh(config: MeshConfig, dna: DNA, mesh_object: MObject) -> MDagModifier:
-        """
-        Renames the initial mesh object that was created to the name from the configuration.
-
-        @type config: MeshConfig
-        @param config: Mesh configuration from the DNA.
-
-        @type mesh_object: MObject
-        @param data: An object that stores values that get passed around different methods.
-
-        @rtype: Tuple[MDagModifier]
-        @returns: Maya object representing the dag modifier.
-        """
-
+    def rename_mesh(config, dna, mesh_object):
         mesh_name = dna.get_mesh_name(config.mesh_index)
-        logging.info(f"naming mesh to: {mesh_name}")
+        logging.info("naming mesh to:"+ mesh_name)
 
         dag_modifier = MDagModifier()
         dag_modifier.renameNode(mesh_object, mesh_name)
@@ -120,21 +64,7 @@ class MeshNeutral:
         return dag_modifier
 
     @staticmethod
-    def get_texture_data(
-        mesh_index: int, dna: DNA
-    ) -> Tuple[List[float], List[float], List[int]]:
-        """
-        Gets the data needed for the creation of textures.
-
-        @type mesh_index: int
-        @param mesh_index: The mesh index
-
-        @type dna: DNA
-        @param dna: Instance of DNA.
-
-        @rtype: Tuple[List[float], List[float], List[int]] @returns: The tuple containing the list of texture
-        coordinate Us, the list of texture coordinate Vs and the list of texture coordinate indices.
-        """
+    def get_texture_data(mesh_index, dna):
 
         texture_coordinates = dna.get_vertex_texture_coordinates_for_mesh(mesh_index)
         dna_faces = dna.get_faces(mesh_index)
@@ -164,24 +94,8 @@ class MeshNeutral:
         return texture_coordinate_us, texture_coordinate_vs, texture_coordinate_indices
 
     @staticmethod
-    def add_texture_coordinates(
-        config: MeshConfig, dna: DNA, data: MeshModel, fn_mesh: MFnMesh
-    ) -> None:
-        """
-        Method for adding texture coordinates.
-
-        @type config: MeshConfig
-        @param config: Mesh configuration from the DNA.
-
-        @type data: MeshModel
-        @param data: An object that stores values that get passed around different methods.
-
-        @type fn_mesh: MFnMesh
-        @params fn_mesh: Object used for manipulating maya mesh objects.
-        """
-
+    def add_texture_coordinates(config, dna, data, fn_mesh):
         logging.info("adding texture coordinates...")
-
         (
             texture_coordinate_us,
             texture_coordinate_vs,

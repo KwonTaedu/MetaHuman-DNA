@@ -7,7 +7,7 @@ from maya.api.OpenMaya import MObject
 from ..builder.analog_gui import AnalogGui
 from ..builder.gui import Gui
 from ..builder.joint import Joint as JointBuilder
-from ..builder.mesh import Mesh
+from ..builder.mesh import Mesh #
 from ..config.character import Character
 from ..const.naming import (
     ANALOG_GUI_HOLDER,
@@ -20,11 +20,11 @@ from ..const.naming import (
     RIG_HOLDER_PREFIX,
 )
 from ..model.dna import DNA
-from ..model.joint import Joint as JointModel
-from ..util.additional_assembly_script import AdditionalAssemblyScript
+from ..model.joint import Joint as JointModel 
+from ..util.additional_assembly_script import AdditionalAssemblyScript #
 from ..util.maya_util import Maya
-from ..util.rig_logic import RigLogic
-from ..util.shader import Shader as ShaderUtil
+from ..util.rig_logic import RigLogic #
+from ..util.shader import Shader as ShaderUtil #
 
 
 class CharacterCreator:

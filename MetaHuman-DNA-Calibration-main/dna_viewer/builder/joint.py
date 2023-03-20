@@ -1,47 +1,21 @@
-from typing import Dict, List
-
 from maya import cmds
 
 from ..model.joint import Joint as JointModel
 
 
 class Joint:
-    """
-    A builder class used for adding joints to the scene
-
-    Attributes
-    ----------
-    @type joints: List[JointModel]
-    @param joints: data representing the joints
-
-    @type linear_modifier: float
-    @param linear_modifier: The linear modifier that should be applied to the joints
-
-    @type angle_modifier: float
-    @param angle_modifier: The linear modifier that should be applied to the joints
-
-    @type joint_flags: Dict[str, bool]
-    @param joint_flags: A mapping used for setting flags that are used to avoid adding the same joint multiple times
-    """
-
-    def __init__(
-        self, joints: List[JointModel], linear_modifier: float, angle_modifier: float
-    ) -> None:
+    def __init__(self, joints, linear_modifier, angle_modifier):
         self.joints = joints
         self.linear_modifier = linear_modifier
         self.angle_modifier = angle_modifier
-        self.joint_flags: Dict[str, bool] = {}
+
+        self.joint_flags = {}
 
         for joint in self.joints:
             self.joint_flags[joint.name] = False
 
-    def add_joint_to_scene(self, joint: JointModel) -> None:
-        """
-        Adds the given joint to the scene
+    def add_joint_to_scene(self, joint):
 
-        @type joint: JointModel
-        @param joint: The joint to be added to the scene
-        """
 
         if self.joint_flags[joint.name]:
             return
@@ -80,8 +54,6 @@ class Joint:
         )
         self.joint_flags[joint.name] = True
 
-    def process(self) -> None:
-        """Starts adding all the provided joints to the scene"""
-
+    def process(self):
         for joint in self.joints:
             self.add_joint_to_scene(joint)

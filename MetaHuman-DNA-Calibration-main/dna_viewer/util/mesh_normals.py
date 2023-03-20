@@ -1,5 +1,3 @@
-from typing import Optional
-
 from maya import cmds, mel
 from maya.api.OpenMaya import MFnMesh, MSpace, MVector
 
@@ -10,33 +8,9 @@ from ..util.maya_util import Maya
 
 
 class MeshNormals:
-    """
-    A utility class used for adding normals to a mesh
-    """
 
     @staticmethod
-    def add_normals(
-        config: MeshConfig,
-        dna: DNA,
-        data: MeshModel,
-        fn_mesh: MFnMesh,
-        space: Optional[MSpace] = MSpace.kObject,
-    ) -> None:
-        """
-        Adds normals to the mesh node.
-
-        @type config: MeshConfig
-        @param config: Mesh configuration from the DNA.
-
-        @type data: MeshModel
-        @param data: An object that stores values that get passed around different methods.
-
-        @type fn_mesh: MFnMesh
-        @params fn_mesh: Object used for manipulating maya mesh objects.
-
-        @type space: Optional[space]
-        @params space: The maya space used for setting the face vertex normals (defaults to MSpace.kObject)
-        """
+    def add_normals(config,dna,data,fn_mesh: MFnMesh,space = MSpace.kObject):
 
         data.vertex_normals = dna.get_vertex_normals_for_mesh(config.mesh_index)
         data.dna_vertex_layout_normals = []

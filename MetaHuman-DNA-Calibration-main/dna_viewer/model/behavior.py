@@ -1,188 +1,50 @@
-from dataclasses import dataclass, field
-from typing import List, Optional
-
-
-@dataclass
 class ConditionalTable:
-    """
-    A model class for holding various values
+    def __init__(self,from_values=[],to_values=[],slope_values=[],cut_values= [],inputs=[],outputs=[]):
+        self.from_values = from_values
+        self.to_values = to_values
+        self.slope_values = slope_values
+        self.cut_values = cut_values
+        self.inputs = inputs
+        self.outputs = outputs
 
-    Attributes
-    ----------
-    @type from_values: List[float]
-    @param from_values: The list of values
-
-    @type to_values: List[float]
-    @param to_values: The list of values
-
-    @type slope_values: List[float]
-    @param slope_values: The list of slope values
-
-    @type cut_values: List[float]
-    @param cut_values: The list of cut values
-
-    @type inputs: List[int]
-    @param inputs: The indices of inputs
-
-    @type outputs: List[int]
-    @param outputs: The indices of outputs
-    """
-
-    from_values: List[float] = field(default_factory=list)
-    to_values: List[float] = field(default_factory=list)
-    slope_values: List[float] = field(default_factory=list)
-    cut_values: List[float] = field(default_factory=list)
-    inputs: List[int] = field(default_factory=list)
-    outputs: List[int] = field(default_factory=list)
-
-
-@dataclass
 class PSDMatrix:
-    """
-    A model class for holding data about Pose Space Deformation
+    def __init__(self,count=None,rows=[],columns=[],values=[]):
+        self.count = count
+        self.rows = rows
+        self.columns = columns
+        self.values = values
 
-    Attributes
-    ----------
-    @type count: int
-    @param count: The list of values
-
-    @type rows: List[int]
-    @param rows: List of row indices used for storing values
-
-    @type columns: List[int]
-    @param columns: List of row indices used for storing values
-
-    @type values: List[float]
-    @param values: The list of values, that can be accessed from the row and column index
-    """
-
-    count: Optional[int] = field(default=None)
-    rows: List[int] = field(default_factory=list)
-    columns: List[int] = field(default_factory=list)
-    values: List[float] = field(default_factory=list)
-
-
-@dataclass
 class JointGroup:
-    """
-    A model class for holding data about joint groups
+    def __init__(self,lods=[],values=[],joints=[],inputs=[],outputs=[]):
+        self.lods = lods
+        self.values = values
+        self.joints = joints
+        self.inputs = inputs
+        self.outputs = outputs
 
-    Attributes
-    ----------
-    @type lods: List[int]
-    @param lods: A list of lod indices that the joint group is contained within
-
-    @type values: List[float]
-    @param values: A list of values
-
-    @type joints: List[int]
-    @param joints: A list of joint indices
-
-    @type inputs: List[int]
-    @param inputs: The indices of inputs
-
-    @type outputs: List[int]
-    @param outputs: The indices of outputs
-    """
-
-    lods: List[int] = field(default_factory=list)
-    values: List[float] = field(default_factory=list)
-    joints: List[int] = field(default_factory=list)
-    inputs: List[int] = field(default_factory=list)
-    outputs: List[int] = field(default_factory=list)
-
-
-@dataclass
 class BlendShapesData:
-    """
-    A model class for holding data about blend shapes
-
-    Attributes
-    ----------
-    @type lods: List[int]
-    @param lods: A list of lod indices that the blend shapes are contained within
-
-    @type inputs: List[int]
-    @param inputs: The indices of inputs
-
-    @type outputs: List[int]
-    @param outputs: The indices of outputs
-    """
-
-    lods: List[int] = field(default_factory=list)
-    inputs: List[int] = field(default_factory=list)
-    outputs: List[int] = field(default_factory=list)
+    def __init__(self,lods=[],inputs=[],outputs=[]):
+        self.lods = lods
+        self.inputs = inputs
+        self.outputs = outputs
 
 
-@dataclass
 class AnimatedMapsData:
-    """
-    A model class for holding data about animated maps
+    def __init__(self,lods=[],conditional_table = ConditionalTable()):
+        self.lods = lods
+        self.conditional_table = conditional_table
 
-    Attributes
-    ----------
-    @type lods: List[int]
-    @param lods: A list of lod indices that the blend shapes are contained within
-
-    @type conditional_table: ConditionalTable
-    @param conditional_table: Data needed for animated maps
-    """
-
-    lods: List[int] = field(default_factory=list)
-    conditional_table: ConditionalTable = field(default_factory=ConditionalTable)
-
-
-@dataclass
 class JointsData:
-    """
-    A model class for storing data about joints
+    def __init__(self,joint_row_count=None,joint_column_count=None,joint_variable_attribute_indices=[],joint_groups=[]):
+        self.joint_row_count = joint_row_count
+        self.joint_column_count = joint_column_count
+        self.joint_variable_attribute_indices = joint_variable_attribute_indices
+        self.joint_groups = joint_groups
 
-    Attributes
-    ----------
-    @type joint_row_count: int
-    @param joint_row_count: The row count of the matrix that stores the joints data
-
-    @type joint_column_count: int
-    @param joint_column_count: The column count of the matrix that stores the joints data
-
-    @type joint_variable_attribute_indices: List[List[int]]
-    @param joint_variable_attribute_indices: List of joint variable attribute indices per LOD
-
-    @type joint_groups: List[JointGroup]
-    @param joint_groups: The list of joint groups
-    """
-
-    joint_row_count: Optional[int] = field(default=None)
-    joint_column_count: Optional[int] = field(default=None)
-    joint_variable_attribute_indices: List[List[int]] = field(default_factory=list)
-    joint_groups: List[JointGroup] = field(default_factory=list)
-
-
-@dataclass
 class Behavior:
-    """
-    A model class for holding data about the behavior part of the DNA
-
-    Attributes
-    ----------
-    @type gui_to_raw: ConditionalTable
-    @param gui_to_raw: Mapping data about gui to raw values
-
-    @type psd: PSDMatrix
-    @param psd: The data representing Pose Space Deformation
-
-    @type blend_shapes: BlendShapesData
-    @param blend_shapes: The data representing blend shapes
-
-    @type animated_maps: AnimatedMapsData
-    @param animated_maps: The data representing animated maps
-
-    @type joints: JointsData
-    @param joints: The data representing joints
-    """
-
-    gui_to_raw: ConditionalTable = field(default_factory=ConditionalTable)
-    psd: PSDMatrix = field(default_factory=PSDMatrix)
-    blend_shapes: BlendShapesData = field(default_factory=BlendShapesData)
-    animated_maps: AnimatedMapsData = field(default_factory=AnimatedMapsData)
-    joints: JointsData = field(default_factory=JointsData)
+    def __init__(self,gui_to_raw=ConditionalTable(),psd=PSDMatrix(),blend_shapes=BlendShapesData(),animated_maps=AnimatedMapsData(),joints=JointsData()):
+        self.gui_to_raw = gui_to_raw
+        self.psd = psd
+        self.blend_shapes = blend_shapes
+        self.animated_maps = animated_maps
+        self.joints = joints

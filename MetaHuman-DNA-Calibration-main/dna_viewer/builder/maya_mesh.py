@@ -8,30 +8,10 @@ from ..model.mesh import Mesh as MeshModel
 from ..util.mesh_blend_shape import MeshBlendShape
 from ..util.mesh_neutral import MeshNeutral
 from ..util.mesh_normals import MeshNormals
-from ..util.mesh_skin import MeshSkin
-
+from ..util.mesh_skin import MeshSkin #
+ 
 
 class MayaMesh:
-    """
-    A builder class used for adding joints to the scene
-
-    Attributes
-    ----------
-    @type config: MeshConfig
-    @param config: The mesh configuration options used for creating meshes
-
-    @type data: MeshModel
-    @param data: mesh data used in the mesh creation process
-
-    @type fn_mesh: om.MFnMesh
-    @param fn_mesh: OpenMaya class used for creating the mesh
-
-    @type mesh_object: om.MObject
-    @param mesh_object: the object representing the mesh
-
-    @type dag_modifier: om.MDagModifier
-    @param dag_modifier: OpenMaya class used for naming the mesh
-    """
 
     def __init__(self, config: MeshConfig, dna: DNA) -> None:
         self.config = config
