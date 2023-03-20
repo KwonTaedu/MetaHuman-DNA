@@ -1,5 +1,3 @@
-from typing import Optional
-
 from dna import BinaryStreamReader
 
 from ..model.definition import Definition as DefinitionModel

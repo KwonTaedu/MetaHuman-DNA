@@ -1,7 +1,5 @@
 import logging
 import traceback
-from typing import List, Optional
-
 from ..builder.character import Character, CharacterBuildResult # import 
 from ..config.scene import Scene as SceneConfig
 from ..model.dna import DNA
@@ -82,7 +80,7 @@ class Scene:
             self.config.units.angle_unit
         )
 
-        results: List[CharacterBuildResult] = []
+        results = []
         for character_config in self.config.characters:
             character_config.with_linear_modifier(linear_modifier).with_angle_modifier(
                 angle_modifier

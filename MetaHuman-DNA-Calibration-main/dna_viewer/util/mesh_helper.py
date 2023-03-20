@@ -1,4 +1,3 @@
-print("---")
 import logging
 
 from ..model.dna import DNA

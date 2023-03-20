@@ -22,4 +22,4 @@ class Import:
             module = module_from_spec(spec)
             spec.loader.exec_module(module)
             return module
-        raise DNAViewerError(f"File {path} is not found!")
+        raise DNAViewerError("File"+ path+" is not found!")
