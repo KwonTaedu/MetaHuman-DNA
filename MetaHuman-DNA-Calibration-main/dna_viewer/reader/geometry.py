@@ -1,6 +1,6 @@
 import logging
 
-from dna import BinaryStreamReader
+#from dna import BinaryStreamReader
 
 from ..const.printing import BLEND_SHAPE_PRINT_RANGE
 from ..model.geometry import UV, BlendShape, Layout, Mesh, Point3
