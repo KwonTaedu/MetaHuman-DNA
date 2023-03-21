@@ -17,8 +17,8 @@ class RigLogic:
         string_to_be_executed = self.config.command
         string_to_be_executed += " -n '"+self.config.name+"'"
         string_to_be_executed += ' -dfp "'+self.config.dna_file_path+'"'
-        string_to_be_executed += f' -cn "'+self.config.control_naming+'"'
-        string_to_be_executed += f' -jn "'+self.config.joint_naming+'"'
-        string_to_be_executed += f' -bsn "'+self.config.blend_shape_naming+'"'
-        string_to_be_executed += f' -amn "'+self.config.animated_map_naming+'"; '
+        string_to_be_executed += ' -cn "'+self.config.control_naming+'"'
+        string_to_be_executed += ' -jn "'+self.config.joint_naming+'"'
+        string_to_be_executed += ' -bsn "'+self.config.blend_shape_naming+'"'
+        string_to_be_executed += ' -amn "'+self.config.animated_map_naming+'"; '
         return string_to_be_executed

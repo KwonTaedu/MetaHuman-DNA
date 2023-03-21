@@ -1,8 +1,7 @@
 import logging
-from pathlib import Path
-from typing import Optional
+import os
 
-# from maya.cmds import confirmDialog message
+from maya.cmds import confirmDialog
 from PySide2 import QtCore, QtWidgets
 
 from ..config.aas import AdditionalAssemblyScript
@@ -25,22 +24,20 @@ from ..const.ui import (
     WINDOW_TITLE,
 )
 from .widgets import QHLine
-print("Scene")
 
 from ..reader.dna import DNA
 from ..ui.elements import Elements 
 from ..ui.elements_creator import ElementsCreator # 
 from ..builder.scene import Scene # << import 
 
-print("ui import end")
-def show_dna_viewer_window() -> None:
+def show_dna_viewer_window():
     DnaViewerWindow.show_window()
 
 
 class DnaViewerWindow(QtWidgets.QMainWindow):
-    window: QtWidgets.QMainWindow = None
+    # window: QtWidgets.QMainWindow = None
 
-    def __init__(self, parent: QtWidgets.QWidget = None) -> None:
+    def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
         self.elements = Elements()
         self.elements_creator = ElementsCreator(self, self.elements)
@@ -48,11 +45,9 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         self.setup_window()
         self.create_ui()
         self.build_scene_successful = False
-        self.character_config: Optional[Character] = None
+        self.character_config = None
 
-    def setup_window(self) -> None:
-        """A method for setting up the window"""
-
+    def setup_window(self):
         self.setWindowFlags(
             self.windowFlags()
             | QtCore.Qt.WindowTitleHint
@@ -66,20 +61,13 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         self.setWindowFlags(QtCore.Qt.Window)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
-    def create_ui(self) -> None:
-        """Fills the window with UI elements"""
+    def create_ui(self):
 
         self.elements.main_widget = self.create_main_widget()
         self.setCentralWidget(self.elements.main_widget)
         self.set_size()
 
-    def create_main_widget(self) -> QtWidgets.QWidget:
-        """
-        Creates the widget containing the UI elements
-
-        @rtype: QtWidgets.QWidget
-        @returns: the main widget
-        """
+    def create_main_widget(self):
 
         header = self.elements_creator.create_header()
         body = self.elements_creator.create_body()
@@ -93,15 +81,12 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         layout.setSpacing(SPACING)
         return widget
 
-    def set_size(self) -> None:
-        """Sets the window size"""
-
+    def set_size(self):
         self.setMaximumSize(WINDOW_SIZE_WIDTH_MAX, WINDOW_SIZE_HEIGHT_MAX)
         self.setMinimumSize(WINDOW_SIZE_WIDTH_MIN, WINDOW_SIZE_HEIGHT_MIN)
         self.resize(WINDOW_SIZE_WIDTH_MIN, WINDOW_SIZE_HEIGHT_MIN)
 
-    def process(self) -> None:
-        """Start the build process of creation of scene from provided configuration from the UI"""
+    def process(self) :
 
         self.character_config = self.get_character_config()
 
@@ -109,13 +94,8 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         self.build_scene()
         self.elements.main_widget.setEnabled(True)
 
-    def get_character_config(self) -> Character:
-        """
-        Gets the character config from the UI elements
+    def get_character_config(self):
 
-        @rtype: Character
-        @returns: character configuration object
-        """
 
         gui_path = self.elements.get_gui_path()
         gui_options = Gui(gui_path=gui_path) if gui_path else None
@@ -129,7 +109,7 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         aas = (
             AdditionalAssemblyScript(
                 path=aas_path,
-                module_name=Path(aas_path).stem,
+                module_name = os.path.basename(aas_path.split(".")[0])
             )
             if aas_path
             else None
@@ -152,16 +132,13 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
 
         return config
 
-    def set_progress(self, text: str = None, value: int = None) -> None:
-        """Setting text and/or value to progress bar"""
-
+    def set_progress(self, text = None, value = None):
         if text is not None:
             self.elements.progress_bar.setFormat(text)
         if value is not None:
             self.elements.progress_bar.setValue(value)
 
-    def build_scene(self) -> None:
-        """Start building the scene"""
+    def build_scene(self):
 
         try:
             self.set_progress(text="Processing in progress...", value=0)
@@ -185,10 +162,10 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         except Exception as e:
             self.set_progress(text="Processing failed", value=100)
             logging.error(e)
-            # confirmDialog(message=e, button=["ok"], icon="critical")
+            confirmDialog(message=e, button=["ok"], icon="critical")
 
     @staticmethod
-    def show_window() -> None:
+    def show_window():
         if DnaViewerWindow.window is None:
             DnaViewerWindow.window = DnaViewerWindow(
                 parent=DnaViewerWindow.maya_main_window()
@@ -196,24 +173,14 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         DnaViewerWindow.activate_window()
 
     @staticmethod
-    def maya_main_window() -> QtWidgets.QWidget:
-        """
-        Gets the MayaWindow instance
-
-        @throws RuntimeError
-
-        @rtype: QtWidgets.QWidget
-        @returns: main window instance
-        """
-
+    def maya_main_window():
         for obj in QtWidgets.QApplication.topLevelWidgets():
             if obj.objectName() == "MayaWindow":
                 return obj
         raise RuntimeError("Could not find MayaWindow instance")
 
     @staticmethod
-    def activate_window() -> None:
-        """Shows window if minimized"""
+    def activate_window():
 
         try:
             DnaViewerWindow.window.show()
