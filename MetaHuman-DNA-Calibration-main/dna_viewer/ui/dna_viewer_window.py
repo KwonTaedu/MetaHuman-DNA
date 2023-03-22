@@ -26,9 +26,9 @@ from ..const.ui import (
 from .widgets import QHLine
 
 from ..reader.dna import DNA
+from ..builder.scene import Scene
 from ..ui.elements import Elements 
-from ..ui.elements_creator import ElementsCreator # 
-from ..builder.scene import Scene # << import 
+from ..ui.elements_creator import ElementsCreator
 
 def show_dna_viewer_window():
     DnaViewerWindow.show_window()
@@ -37,7 +37,7 @@ def show_dna_viewer_window():
 class DnaViewerWindow(QtWidgets.QMainWindow):
     # window: QtWidgets.QMainWindow = None
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent):
         super().__init__(parent)
         self.elements = Elements()
         self.elements_creator = ElementsCreator(self, self.elements)
