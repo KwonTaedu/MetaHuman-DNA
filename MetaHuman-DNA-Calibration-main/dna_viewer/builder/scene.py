@@ -48,7 +48,7 @@ class Scene:
         except Exception as e:
             traceback.print_exc()
             logging.error("Unhandled exception, "+e)
-            raise SceneError(str(e)) from e
+            raise SceneError(str(e))
 
     def save_scene(self):
         if self.config.save_options:

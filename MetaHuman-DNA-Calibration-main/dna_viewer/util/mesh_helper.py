@@ -1,3 +1,4 @@
+print("asd")
 import logging
 
 from ..model.dna import DNA
@@ -23,7 +24,7 @@ def print_mesh_indices_containing_string(mesh_name_part, lod, dna):
             logging.info("\t"+dna.get_mesh_name(mesh_index)+"->"+mesh_index)
     except DNAViewerError as e:
         logging.error(e)
-        raise DNAViewerError(e) from e
+        raise DNAViewerError(e)
     except Exception as e:
         logging.error("Unhandled exception, "+e)
-        raise DNAViewerError(e) from e
+        raise DNAViewerError(e)
