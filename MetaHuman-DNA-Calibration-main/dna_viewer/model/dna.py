@@ -7,7 +7,7 @@ from ..model.joint import Joint
 from ..util.conversion import Conversion
 from ..util.error import DNAViewerError
 
-class BaseDNA:
+class BaseDNA(object):
     def __init__(self,descriptor=None,definition=None,behavior=None,geometry=None):
         self.descriptor = descriptor
         self.definition = definition
@@ -17,7 +17,7 @@ class BaseDNA:
 
 class DNA(BaseDNA):
     def __init__(self, path):
-        super().__init__()
+        super(DNA,self).__init__()
         self.path = path
 
     def read_all_neutral_joints(self):
