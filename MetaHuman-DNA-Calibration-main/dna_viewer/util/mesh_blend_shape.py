@@ -22,11 +22,11 @@ from ..util.mesh_neutral import MeshNeutral
 class MeshBlendShape:
     @staticmethod
     def create_all_derived_meshes(config,dna,data,fn_mesh,dag_modifier,add_mesh_name_to_blend_shape_channel_name):
-
+        
 
         logging.info("building derived meshes...")
 
-        group: str = cmds.group(
+        group = cmds.group(
             empty=True,
             name= BLEND_SHAPE_GROUP_PREFIX+dna.get_mesh_name(config.mesh_index)
         )
@@ -66,7 +66,7 @@ class MeshBlendShape:
             config.mesh_index, blend_shape_target_index
         )
         for zipped_delta in zipped_deltas:
-            delta: Point3 = zipped_delta[1]
+            delta= zipped_delta[1]
             new_vert_layout[zipped_delta[0]] += MPoint(
                 config.linear_modifier * delta.x,
                 config.linear_modifier * delta.y,
@@ -109,3 +109,4 @@ class MeshBlendShape:
         cmds.blendShape(name=mesh_name+BLEND_SHAPE_NAME_POSTFIX)
         cmds.delete(BLEND_SHAPE_GROUP_PREFIX+mesh_name)
 
+print("qqqq")
