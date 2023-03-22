@@ -10,7 +10,7 @@ from ..util.maya_util import Maya
 class MeshNormals:
 
     @staticmethod
-    def add_normals(config,dna,data,fn_mesh: MFnMesh,space = MSpace.kObject):
+    def add_normals(config,dna,data,fn_mesh,space = MSpace.kObject):
 
         data.vertex_normals = dna.get_vertex_normals_for_mesh(config.mesh_index)
         data.dna_vertex_layout_normals = []
@@ -18,7 +18,7 @@ class MeshNormals:
             data.dna_vertex_layout_normals.append(
                 dna.get_normal_for_mesh_index_and_layout(config.mesh_index, layout)
             )
-
+        
         normal_array = []
         face_array = []
         vertex_array = []

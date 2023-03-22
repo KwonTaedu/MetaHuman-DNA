@@ -1,3 +1,4 @@
+print("vvv")
 import logging
 
 from ..config.character import Character
@@ -30,4 +31,6 @@ class AdditionalAssemblyScript:
             else:
                 script_method()
         except Exception as e:
-            raise DNAViewerError("Can't run aas script. Reason: "+e) from e
+            raise DNAViewerError("Can't run aas script. Reason: "+e)
+        
+

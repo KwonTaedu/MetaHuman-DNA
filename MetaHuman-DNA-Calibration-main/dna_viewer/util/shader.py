@@ -24,4 +24,4 @@ class Shader:
             logging.error(
                 "Couldn't set lambert shader for mesh"+mesh_name+". Reason: "+e
             )
-            raise DNAViewerError(e) from e
+            raise DNAViewerError(e)

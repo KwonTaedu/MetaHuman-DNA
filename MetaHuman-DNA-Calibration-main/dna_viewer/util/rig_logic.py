@@ -28,4 +28,4 @@ class RigLogic:
                 )
                 raise DNAViewerError(
                     "Something went wrong, skipping adding the rig logic... Reason:"+e
-                ) from e
+                )

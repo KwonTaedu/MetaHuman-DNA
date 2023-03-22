@@ -108,5 +108,3 @@ class MeshBlendShape:
         cmds.select(mesh_name, add=True)
         cmds.blendShape(name=mesh_name+BLEND_SHAPE_NAME_POSTFIX)
         cmds.delete(BLEND_SHAPE_GROUP_PREFIX+mesh_name)
-
-print("qqqq")
