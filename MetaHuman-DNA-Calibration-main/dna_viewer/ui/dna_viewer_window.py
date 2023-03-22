@@ -3,6 +3,8 @@ import os
 
 from maya.cmds import confirmDialog
 from PySide2 import QtCore, QtWidgets
+from PySide2.QtWidgets import *
+import sys
 
 from ..config.aas import AdditionalAssemblyScript
 from ..config.analog_gui import AnalogGui
@@ -38,7 +40,7 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
     # window: QtWidgets.QMainWindow = None
 
     def __init__(self, parent):
-        super().__init__(parent)
+        super(DnaViewerWindow,self).__init__(parent)
         self.elements = Elements()
         self.elements_creator = ElementsCreator(self, self.elements)
 
@@ -46,6 +48,7 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         self.create_ui()
         self.build_scene_successful = False
         self.character_config = None
+
 
     def setup_window(self):
         self.setWindowFlags(
@@ -166,11 +169,19 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
 
     @staticmethod
     def show_window():
-        if DnaViewerWindow.window is None:
-            DnaViewerWindow.window = DnaViewerWindow(
-                parent=DnaViewerWindow.maya_main_window()
-            )
-        DnaViewerWindow.activate_window()
+        parent = None
+        for obj in QtWidgets.QApplication.topLevelWidgets():
+            if obj.objectName() == "MayaWindow":
+                parent = obj
+                break
+
+        app = None
+        if not QApplication.instance():
+            app = QApplication(sys.argv)
+            app.setStyle("Fusion")
+
+        mainWindow = DnaViewerWindow(parent)
+        mainWindow.show()
 
     @staticmethod
     def maya_main_window():
@@ -178,20 +189,3 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
             if obj.objectName() == "MayaWindow":
                 return obj
         raise RuntimeError("Could not find MayaWindow instance")
-
-    @staticmethod
-    def activate_window():
-
-        try:
-            DnaViewerWindow.window.show()
-
-            if DnaViewerWindow.window.windowState() & QtCore.Qt.WindowMinimized:
-                DnaViewerWindow.window.setWindowState(QtCore.Qt.WindowActive)
-
-            DnaViewerWindow.window.raise_()
-            DnaViewerWindow.window.activateWindow()
-        except RuntimeError as e:
-            print(e)
-            if str(e).rstrip().endswith("already deleted."):
-                DnaViewerWindow.window = None
-                DnaViewerWindow.show_window()

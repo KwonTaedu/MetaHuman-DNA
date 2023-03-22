@@ -22,7 +22,7 @@ class FileChooser(QWidget):
         dir_selector = False,
         on_changed = None,
     ):
-        super().__init__(parent=parent)
+        super(FileChooser,self).__init__(parent=parent)
 
         self._dialog_caption = dialog_caption
         self._dialog_filter = dialog_filter

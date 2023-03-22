@@ -11,7 +11,7 @@ class Checkbox:
 class BuildOptionsWidget(QWidget):
 
     def __init__(self, elements, on_generic_changed):
-        super().__init__()
+        super(BuildOptionsWidget,self).__init__()
 
         self.elements = elements
 

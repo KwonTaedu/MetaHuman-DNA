@@ -16,7 +16,7 @@ from ..ui.elements import Elements
 class MeshTreeList(QWidget):
 
     def __init__(self, elements):
-        super().__init__()
+        super(MeshTreeList,self).__init__()
         self.elements = elements
 
         label = QLabel("Meshes:")
