@@ -3,10 +3,9 @@ import os
 from maya import cmds
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QCheckBox, QProgressBar, QPushButton, QWidget
-
 from ..config.character import BuildOptions
 from ..model.dna import DNA
-from ..ui.file_chooser import FileChooser 
+from ..ui.file_chooser import FileChooser
 
 class Elements:
     def __init__(self,main_widget = None,select_dna_path=None,load_dna_btn=None,mesh_tree_list=None,joints_cb=None,normals_cb = None,
@@ -36,7 +35,7 @@ class Elements:
 
     @staticmethod
     def get_file_path(input):
-        path: str = input.get_file_path()
+        path = input.get_file_path()
         if path and os.path.exists(path):
             return path
         return None
