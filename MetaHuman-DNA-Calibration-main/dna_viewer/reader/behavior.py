@@ -1,6 +1,5 @@
-print("1")
 #from dna import BinaryStreamReader
-print("2")
+
 from ..model.behavior import AnimatedMapsData
 from ..model.behavior import Behavior as BehaviorModel
 from ..model.behavior import BlendShapesData, ConditionalTable, JointGroup, PSDMatrix

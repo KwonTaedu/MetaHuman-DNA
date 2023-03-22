@@ -1,5 +1,6 @@
 import logging
 
+print("start")
 from ..builder.scene import Scene as SceneBuilder # import 
 from ..config.character import BuildOptions, Character
 from ..config.scene import Scene as SceneConfig

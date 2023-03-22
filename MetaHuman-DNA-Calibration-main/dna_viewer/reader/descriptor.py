@@ -1,4 +1,4 @@
-print("descriptor")
+
 #from dna import BinaryStreamReader
 
 from ..model.descriptor import Descriptor as DescriptorModel

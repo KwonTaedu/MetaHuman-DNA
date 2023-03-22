@@ -4,7 +4,6 @@ from ..config.mesh import Mesh as MeshConfig
 from ..model.dna import DNA
 from ..model.mesh import Mesh as MeshModel
 from ..util.mesh_blend_shape import MeshBlendShape
-print("test")
 from ..util.mesh_neutral import MeshNeutral
 from ..util.mesh_normals import MeshNormals
 from ..util.mesh_skin import MeshSkin

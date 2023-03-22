@@ -1,4 +1,4 @@
-print("definition")
+print("reade.definition")
 #from dna import BinaryStreamReader
 
 from ..model.definition import Definition as DefinitionModel

@@ -1,4 +1,3 @@
-print("asd")
 import logging
 from ..model.behavior import Behavior as BehaviorModel
 from ..model.definition import Definition as DefinitionModel
@@ -6,9 +5,7 @@ from ..model.descriptor import Descriptor as DescriptorModel
 from ..model.dna import DNA as DNAModel
 from ..model.geometry import Geometry as GeometryModel
 from ..model.geometry import Mesh
-print("start66") 
 from ..reader.behavior import Behavior as BehaviorReader 
-print("end")
 from ..reader.definition import Definition as DefinitionReader 
 from ..reader.descriptor import Descriptor as DescriptorReader 
 from ..reader.geometry import Geometry as GeometryReader
