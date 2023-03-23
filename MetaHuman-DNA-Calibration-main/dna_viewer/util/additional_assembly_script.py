@@ -1,4 +1,3 @@
-print("vvv")
 import logging
 
 from ..config.character import Character

@@ -17,33 +17,33 @@ class Layout:
         self.normal_index = normal_index
 
 class Topology:
-    def __init__(self,positions = [], texture_coordinates = [], normals= [],layouts=[],face_vertex_layouts=[]):
-        self.positions = positions
-        self.texture_coordinates = texture_coordinates
-        self.normals = normals
-        self.layouts = layouts
-        self.face_vertex_layouts = face_vertex_layouts
+    def __init__(self,positions = None, texture_coordinates = None, normals= None, layouts=None ,face_vertex_layouts=None):
+        self.positions = positions if positions else []
+        self.texture_coordinates = texture_coordinates if texture_coordinates else []
+        self.normals = normals if normals else []
+        self.layouts = layouts if layouts else []
+        self.face_vertex_layouts = face_vertex_layouts if face_vertex_layouts else []
 
 class BlendShape:
-    def __init__(self,channel=None,deltas={}):
+    def __init__(self,channel=None,deltas=None):
         self.channel = channel
-        self.deltas = deltas
+        self.deltas = deltas if deltas else {}
 
 class SkinWeightsData:
-    def __init__(self,maximum_influence_per_vertex = None, values = [], joint_indices= []):
+    def __init__(self,maximum_influence_per_vertex = None, values = None, joint_indices= None):
         self.maximum_influence_per_vertex = maximum_influence_per_vertex
-        self.values = values
-        self.joint_indices = joint_indices
+        self.values = values if values else []
+        self.joint_indices = joint_indices if joint_indices else []
 
 
 class Mesh:
-    def __init__(self,name = None,topology = Topology(), skin_weights = SkinWeightsData(), blend_shapes = []):
+    def __init__(self,name = None,topology = Topology(), skin_weights = SkinWeightsData(), blend_shapes = None):
         self.name = name
         self.topology = topology
         self.skin_weights = skin_weights
-        self.blend_shapes = blend_shapes
+        self.blend_shapes = blend_shapes if blend_shapes else []
 
 class Geometry:
-    def __init__(self,meshes={}):
-        self.meshes = meshes
+    def __init__(self,meshes=None):
+        self.meshes = meshes if meshes else {}
 

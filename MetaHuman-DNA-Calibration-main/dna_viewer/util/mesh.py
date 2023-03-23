@@ -1,7 +1,6 @@
 import logging
 
-print("start")
-from ..builder.scene import Scene as SceneBuilder # import 
+from ..builder.scene import Scene as SceneBuilder
 from ..config.character import BuildOptions, Character
 from ..config.scene import Scene as SceneConfig
 from ..config.units import AngleUnit, LinearUnit

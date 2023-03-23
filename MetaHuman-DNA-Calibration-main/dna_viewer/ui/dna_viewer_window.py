@@ -165,7 +165,7 @@ class DnaViewerWindow(QtWidgets.QMainWindow):
         except Exception as e:
             self.set_progress(text="Processing failed", value=100)
             logging.error(e)
-            confirmDialog(message=e, button=["ok"], icon="critical")
+            #confirmDialog(message=e, button=["ok"], icon="critical")
 
     @staticmethod
     def show_window():
