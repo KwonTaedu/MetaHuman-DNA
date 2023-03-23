@@ -5,7 +5,8 @@ import os
 from maya import cmds
 
 from ..config.scene import SaveOptions
-from ..config.units import Unit
+
+from ..config.units import Unit,LinearUnit,AngleUnit
 from ..model.dna import DNA
 
 
@@ -38,8 +39,9 @@ class SceneBuilder:
 
         linear_unit = units.linear_unit if units.linear_unit else dna.get_linear_unit()
         angle_unit = units.angle_unit if units.angle_unit else dna.get_angle_unit()
-
-        cmds.currentUnit(linear=linear_unit.name, angle=angle_unit.name)
+        print("test util.scen_builder",linear_unit,angle_unit)
+        cmds.currentUnit(linear=LinearUnit.name[linear_unit], angle=AngleUnit.name[angle_unit])
+        # cmds.currentUnit(linear=LinearUnit.name[linear_unit], angle=angle_unit.name)
 
     @staticmethod
     def new_scene():
