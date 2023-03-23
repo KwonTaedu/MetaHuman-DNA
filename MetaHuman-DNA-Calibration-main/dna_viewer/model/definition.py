@@ -1,19 +1,15 @@
 from ..model.geometry import Point3
 
-class NamesAndIndices:
-    def __init__(self,names=[],indices_for_lod={}):
+class NamesAndIndices(object):
+    def __init__(self,names=[],indices_for_lod=[]):
         self.names = names
         self.indices_for_lod = indices_for_lod
 
 
 class Joints(NamesAndIndices):
     def __init__(self,parent_index=[]):
+        super(Joints,self).__init__()
         self.parent_index = parent_index
-
-# @dataclass
-# class Joints(NamesAndIndices):
-
-#     parent_index: List[int] = field(default_factory=list)
 
 class Definition:
     def __init__(self,joints = Joints(), blend_shape_channels = NamesAndIndices(),animated_maps = NamesAndIndices(),meshes = NamesAndIndices(),gui_control_names = [],raw_control_names= [],
