@@ -96,11 +96,7 @@ class Character():
         return self
 
     def with_linear_modifier(self, modifier):
-        print("-0-",self.modifiers)
-        print("-1-",self.modifiers.linear_modifier)
         self.modifiers.linear_modifier = modifier
-        print("-2-",self.modifiers.linear_modifier)
-
         return self
 
     def with_angle_modifier(self, modifier):

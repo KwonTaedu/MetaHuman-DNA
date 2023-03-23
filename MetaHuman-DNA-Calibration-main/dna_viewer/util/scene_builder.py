@@ -39,7 +39,6 @@ class SceneBuilder:
 
         linear_unit = units.linear_unit if units.linear_unit else dna.get_linear_unit()
         angle_unit = units.angle_unit if units.angle_unit else dna.get_angle_unit()
-        print("test util.scen_builder",linear_unit,angle_unit)
         cmds.currentUnit(linear=LinearUnit.name[linear_unit], angle=AngleUnit.name[angle_unit])
         # cmds.currentUnit(linear=LinearUnit.name[linear_unit], angle=angle_unit.name)
 

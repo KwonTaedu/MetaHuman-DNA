@@ -4,7 +4,6 @@ from ..model.behavior import AnimatedMapsData
 from ..model.behavior import Behavior as BehaviorModel
 from ..model.behavior import BlendShapesData, ConditionalTable, JointGroup, PSDMatrix
 
-print("HI")
 class Behavior:
     def __init__(self,stream_reader):
         self.reader = stream_reader
