@@ -50,5 +50,5 @@ class Character:
         creator.add_rig_logic_node()
         creator.run_additional_assembly_script()
 
-        logging.info(creator.character_name,"built successfully!")
+        logging.info("built successfully!")
         return CharacterBuildResult.create(nodes=creator.meshes)
