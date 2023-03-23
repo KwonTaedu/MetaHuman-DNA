@@ -28,7 +28,7 @@ class BuildOptions():
         self.add_mesh_name_to_blend_shape_channel_name = add_mesh_name_to_blend_shape_channel_name
 
 class Character():
-    def __init__(self, dna=None, options=None, modifiers=None, meshes=None, rig_logic_config=None,
+    def __init__(self, dna=None, options=BuildOptions(), modifiers=SpaceModifiers(), meshes=[], rig_logic_config=None,
                  gui_options=None, analog_gui_options=None, create_character_node=True, create_display_layers=True,
                  aas=None):
          
@@ -96,8 +96,11 @@ class Character():
         return self
 
     def with_linear_modifier(self, modifier):
-
+        print("-0-",self.modifiers)
+        print("-1-",self.modifiers.linear_modifier)
         self.modifiers.linear_modifier = modifier
+        print("-2-",self.modifiers.linear_modifier)
+
         return self
 
     def with_angle_modifier(self, modifier):
