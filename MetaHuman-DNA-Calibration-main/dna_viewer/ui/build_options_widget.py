@@ -48,8 +48,7 @@ class BuildOptionsWidget(QWidget):
         return checkbox
 
     def on_joints_changed(self, state):
-
-        if state == Checkbox.checked.value:
+        if state == Checkbox.checked:
             self.elements.process_btn.setEnabled(True)
             if self.elements.mesh_tree_list.get_selected_meshes():
                 self.elements.skin_cb.setEnabled(True)
