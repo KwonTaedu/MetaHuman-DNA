@@ -29,7 +29,7 @@ class AdditionalAssemblyScript:
                 script_method(parameter)
             else:
                 script_method()
-        except Exception as e:
-            raise DNAViewerError("Can't run aas script. Reason: "+e)
+        except:
+            print("Can't run aas script.")
         
 

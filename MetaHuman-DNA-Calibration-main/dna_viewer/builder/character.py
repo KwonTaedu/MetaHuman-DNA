@@ -43,7 +43,7 @@ class Character:
         creator.add_key_frames()
         creator.create_geometry_node()
         creator.create_rig_node()
-        creator.create_character_meshes() #
+        creator.create_character_meshes()
 
         creator.add_gui()
         creator.add_analog_gui()
