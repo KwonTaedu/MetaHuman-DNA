@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 class AnalogGui:
-    def __init__(self,gui_path,facial_root_joint_name,left_eye_joint_name,right_eye_joint_name,central_driver_name,left_eye_driver_name,
-                 right_eye_driver_name,left_eye_aim_up_name,right_eye_aim_up_name,central_aim,le_aim,re_aim
+    def __init__(self,gui_path = None,facial_root_joint_name = None,left_eye_joint_name = None,right_eye_joint_name = None,central_driver_name =None ,
+                 left_eye_driver_name = None,
+                 right_eye_driver_name =None ,left_eye_aim_up_name = None,right_eye_aim_up_name = None,central_aim = None,le_aim = None,re_aim = None
                  ):
         self.gui_path = gui_path if gui_path else None
         self.facial_root_joint_name = facial_root_joint_name if facial_root_joint_name else "FACIAL_C_FacialRoot"
