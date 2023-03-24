@@ -10,7 +10,7 @@ class Maya:
         try:
             sellist = MGlobal.getSelectionListByName(name)
         except Exception as exception:
-            raise DNAViewerError("Element with name:"+name+"not found!")
+            raise DNAViewerError("not found!")
         try:
             return sellist.getDagPath(0)
         except Exception:
