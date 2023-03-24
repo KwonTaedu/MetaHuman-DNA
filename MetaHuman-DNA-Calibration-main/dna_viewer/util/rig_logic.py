@@ -27,5 +27,5 @@ class RigLogic:
                     "The procedure needed for assembling the rig logic was not found, the plugin needed for this might not be loaded."
                 )
                 raise DNAViewerError(
-                    "Something went wrong, skipping adding the rig logic... Reason:"+e
+                    "Something went wrong, skipping adding the rig logic.."
                 )
