@@ -22,10 +22,5 @@ class RigLogic:
                 mel_command = RigLogicBuilder(config.rig_logic_config).build_command()
                 logging.info("mel command:"+ mel_command)
                 mel.eval(mel_command)
-            except Exception as e:
-                logging.error(
-                    "The procedure needed for assembling the rig logic was not found, the plugin needed for this might not be loaded."
-                )
-                raise DNAViewerError(
-                    "Something went wrong, skipping adding the rig logic.."
-                )
+            except :
+                pass
