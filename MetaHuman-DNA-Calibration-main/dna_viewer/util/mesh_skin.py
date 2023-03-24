@@ -65,7 +65,8 @@ class MeshSkin:
         temp_str = mesh_name+"_"+SKIN_CLUSTER_AFFIX+".wl["
         for vertex_id, skin_weight in enumerate(skin_weights):
             if not (vertex_id + 1) % SKIN_WEIGHT_PRINT_RANGE:
-                logging.info(str(int(vertex_id) + 1)+" / "+len(skin_weights))
+                #logging.info(str(int(vertex_id) + 1)+" / "+str(len(skin_weights)))
+                pass
             vertex_infos = skin_weight
 
             # set all skin weights to zero
@@ -79,4 +80,5 @@ class MeshSkin:
                     float(vertex_info[1]),
                 )
         if len(skin_weights) % SKIN_WEIGHT_PRINT_RANGE != 0:
-            logging.info(str(int(skin_weights))+" / "+len(skin_weights))
+            #logging.info(str(int(skin_weights))+" / "+str(len(skin_weights)))
+            pass
