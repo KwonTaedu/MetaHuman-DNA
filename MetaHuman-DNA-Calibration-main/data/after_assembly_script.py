@@ -89,15 +89,15 @@ def connect_expression(driverCtrl, driverAttr, minVal, maxVal, driverKey1, drive
     """
 
     # create driver attribute if dont exists
-    if not cmds.objExists(f"{driverCtrl}.{driverAttr}"):
+    if not cmds.objExists(driverCtrl+"."+driverAttr):
         cmds_set_attr(driverCtrl, longName=driverAttr, keyable=True, attributeType="float", minValue=minVal,
                       maxValue=maxVal, dv=0.0)
 
     # connect CTRL driver with driven expression
-    cmds_set_driven_keyframe(f"{expCtrl}.{expAttr}", itt="linear", ott="linear",
-                             currentDriver=f"{driverCtrl}.{driverAttr}", driverValue=driverKey1, value=expKey1)
-    cmds_set_driven_keyframe(f"{expCtrl}.{expAttr}", itt="linear", ott="linear",
-                             currentDriver=f"{driverCtrl}.{driverAttr}", driverValue=driverKey2, value=expKey2)
+    cmds_set_driven_keyframe("{}.{}".format(expCtrl,expAttr), itt="linear", ott="linear",
+                             currentDriver="{}.{}".format(driverCtrl,driverAttr), driverValue=driverKey1, value=expKey1)
+    cmds_set_driven_keyframe("{}.{}".format(expCtrl,expAttr), itt="linear", ott="linear",
+                             currentDriver="{}.{}".format(driverCtrl,driverAttr), driverValue=driverKey2, value=expKey2)
 
 
 # ****************************************************************************************************
@@ -663,23 +663,23 @@ def eyes_setup():
               locAimUpR)
 
     # create visibility switch
-    cmds_set_driven_keyframe(f"{offGrp}.visibility", itt="linear", ott="linear", currentDriver=attrAimAt,
+    cmds_set_driven_keyframe("{}.visibility".format(offGrp), itt="linear", ott="linear", currentDriver=attrAimAt,
                              driverValue=0,
                              value=0)
-    cmds_set_driven_keyframe(f"{offGrp}.visibility", itt="linear", ott="linear", currentDriver=attrAimAt,
+    cmds_set_driven_keyframe("{}.visibility".format(offGrp), itt="linear", ott="linear", currentDriver=attrAimAt,
                              driverValue=1,
                              value=1)
 
     # connect convergence attribute
-    current_tzl = cmds_get_attr(f"{offGrpEyeL}.tz")
-    current_tzr = cmds_get_attr(f"{offGrpEyeR}.tz")
-    cmds_set_driven_keyframe(f"{offGrpEyeL}.tz", itt="linear", ott="linear",
+    current_tzl = cmds_get_attr("{}.tz".format(offGrpEyeL))
+    current_tzr = cmds_get_attr("{}.tz".format(offGrpEyeR))
+    cmds_set_driven_keyframe("{}.tz".format(offGrpEyeL), itt="linear", ott="linear",
                              currentDriver="CTRL_convergenceSwitch.ty", driverValue=0, value=current_tzl)
-    cmds_set_driven_keyframe(f"{offGrpEyeL}.tz", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.tz".format(offGrpEyeL), itt="linear", ott="linear",
                              currentDriver="CTRL_convergenceSwitch.ty", driverValue=1, value=0)
-    cmds_set_driven_keyframe(f"{offGrpEyeR}.tz", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.tz".format(offGrpEyeR), itt="linear", ott="linear",
                              currentDriver="CTRL_convergenceSwitch.ty", driverValue=0, value=current_tzr)
-    cmds_set_driven_keyframe(f"{offGrpEyeR}.tz", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.tz".format(offGrpEyeR), itt="linear", ott="linear",
                              currentDriver="CTRL_convergenceSwitch.ty", driverValue=1, value=0)
 
     # look direction splines
@@ -735,19 +735,19 @@ def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, 
 
     cmds_space_locator(name=loc_ui_eye)
     cmds_xform(loc_ui_eye, worldSpace=True, absolute=True, translation=jnt_pos)
-    cmds_set_attr(f"{loc_ui_eye}.visibility", 0)
+    cmds_set_attr("{}.visibility".format(loc_ui_eye), 0)
     cmds_parent(loc_ui_eye, loc_eye_root)
-    cmds_set_attr(f"{loc_ui_eye}.rx", 0.0)
-    cmds_set_attr(f"{loc_ui_eye}.ry", 0.0)
-    cmds_set_attr(f"{loc_ui_eye}.rz", 0.0)
+    cmds_set_attr("{}.rx".format(loc_ui_eye), 0.0)
+    cmds_set_attr("{}.ry".format(loc_ui_eye), 0.0)
+    cmds_set_attr("{}.rz".format(loc_ui_eye), 0.0)
 
     cmds_space_locator(name=loc_aim_eye)
     cmds_xform(loc_aim_eye, worldSpace=True, absolute=True, translation=jnt_pos)
-    cmds_set_attr(f"{loc_aim_eye}.visibility", 0)
+    cmds_set_attr("{}.visibility".format(loc_aim_eye), 0)
     cmds_parent(loc_aim_eye, loc_eye_root)
-    cmds_set_attr(f"{loc_aim_eye}.rx", 0.0)
-    cmds_set_attr(f"{loc_aim_eye}.ry", 0.0)
-    cmds_set_attr(f"{loc_aim_eye}.rz", 0.0)
+    cmds_set_attr("{}.rx".format(loc_aim_eye), 0.0)
+    cmds_set_attr("{}.ry".format(loc_aim_eye), 0.0)
+    cmds_set_attr("{}.rz".format(loc_aim_eye), 0.0)
 
     # connect aim loc
     cmds_aim_constraint(ctrl_eye, loc_aim_eye, mo=True, weight=1, aimVector=[0, 0, 1], upVector=[0, 1, 0],
@@ -758,33 +758,33 @@ def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, 
         orient_aim_con = orient_list[0]
 
     # connect ui loc to L/R control
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.ry", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye}.tx",
+    cmds_set_driven_keyframe("{}.ry".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.tx".format(ctrl_ui_eye),
                              driverValue=0, value=0)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.ry", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye}.tx",
+    cmds_set_driven_keyframe("{}.ry".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.tx".format(ctrl_ui_eye),
                              driverValue=1, value=40)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.ry", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye}.tx",
+    cmds_set_driven_keyframe("{}.ry".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.tx".format(ctrl_ui_eye),
                              driverValue=-1, value=-40)
 
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.rx", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye}.ty",
+    cmds_set_driven_keyframe("{}.rx".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.ty".format(ctrl_ui_eye),
                              driverValue=0, value=0)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.rx", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye}.ty",
+    cmds_set_driven_keyframe("{}.rx".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.ty".format(ctrl_ui_eye),
                              driverValue=1, value=-30)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.rx", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye}.ty",
+    cmds_set_driven_keyframe("{}.rx".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.ty".format(ctrl_ui_eye),
                              driverValue=-1, value=40)
 
     # connect ui loc to C control
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.ry", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye_c}.tx",
+    cmds_set_driven_keyframe("{}.ry".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.tx".format(ctrl_ui_eye_c),
                              driverValue=0, value=0)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.ry", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye_c}.tx",
+    cmds_set_driven_keyframe("{}.ry".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.tx".format(ctrl_ui_eye_c),
                              driverValue=1, value=40)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.ry", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye_c}.tx",
+    cmds_set_driven_keyframe("{}.ry".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.tx".format(ctrl_ui_eye_c),
                              driverValue=-1, value=-40)
 
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.rx", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye_c}.ty",
+    cmds_set_driven_keyframe("{}.rx".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.ty".format(ctrl_ui_eye_c),
                              driverValue=0, value=0)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.rx", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye_c}.ty",
+    cmds_set_driven_keyframe("{}.rx".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.ty".format(ctrl_ui_eye_c),
                              driverValue=1, value=-30)
-    cmds_set_driven_keyframe(f"{loc_ui_eye}.rx", itt="linear", ott="linear", currentDriver=f"{ctrl_ui_eye_c}.ty",
+    cmds_set_driven_keyframe("{}.rx".format(loc_ui_eye), itt="linear", ott="linear", currentDriver="{}.ty".format(ctrl_ui_eye_c),
                              driverValue=-1, value=40)
 
     constraint_list = cmds_orient_constraint(loc_ui_eye, loc_eye)
@@ -793,16 +793,16 @@ def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, 
         orient_ui_con = constraint_list[0]
 
     # create aim at switch
-    cmds_set_driven_keyframe(f"{orient_aim_con}.{loc_aim_eye}W0", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.{}W0".format(orient_aim_con,loc_aim_eye), itt="linear", ott="linear",
                              currentDriver=attr_aim_at,
                              driverValue=0, value=0)
-    cmds_set_driven_keyframe(f"{orient_aim_con}.{loc_aim_eye}W0", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.{}W0".format(orient_aim_con,loc_aim_eye), itt="linear", ott="linear",
                              currentDriver=attr_aim_at,
                              driverValue=1, value=1)
-    cmds_set_driven_keyframe(f"{orient_ui_con}.{loc_ui_eye}W1", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.{}W1".format(orient_ui_con,loc_ui_eye), itt="linear", ott="linear",
                              currentDriver=attr_aim_at,
                              driverValue=0, value=1)
-    cmds_set_driven_keyframe(f"{orient_ui_con}.{loc_ui_eye}W1", itt="linear", ott="linear",
+    cmds_set_driven_keyframe("{}.{}W1".format(orient_ui_con,loc_ui_eye), itt="linear", ott="linear",
                              currentDriver=attr_aim_at,
                              driverValue=1, value=0)
 
@@ -981,9 +981,10 @@ def clean_up():
                   "clavicle_pec_r", "spine_04_latissimus_l", "spine_04_latissimus_r", "neck_01", "neck_02", "head"]
     for joint in body_joints:
         try:
-            cmds.delete(f"{joint}_scaleX", f"{joint}_scaleY", f"{joint}_scaleZ", f"{joint}_translateX",
-                        f"{joint}_translateY", f"{joint}_translateZ", f"{joint}_rotateX", f"{joint}_rotateY",
-                        f"{joint}_rotateZ")
+            joint = str(joint)
+            cmds.delete(joint+"_scaleX", joint+"_scaleY", joint+"_scaleZ", joint+"_translateX",
+                        joint+"_translateY", joint+"_translateZ", joint+"_rotateX", joint+"_rotateY",
+                        joint+"_rotateZ")
         except:
             pass
 
@@ -1093,129 +1094,130 @@ def cmds_parent(*args, **kwargs):
     try:
         return cmds.parent(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Failed to parent. Error: {ex} \n")
+        stderr.write("Failed to parent. Error\n")
 
 
 def cmds_set_attr(*args, **kwargs):
     try:
         cmds.setAttr(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Failed to set attribute. Error: {ex} \n")
+        stderr.write("Failed to set attribute. Error\n")
 
 
 def cmds_connect_attr(attr1, attr2):
     try:
         cmds.connectAttr(attr1, attr2)
     except Exception as ex:
-        stderr.write(f"Failed to connect attributes. Error: {ex} \n")
+        stderr.write("Failed to connect attributes. Error\n")
 
 
 def cmds_get_attr(attr):
     try:
         return cmds.getAttr(attr)
     except Exception as ex:
-        stderr.write(f"Failed to get attribute. Error: {ex} \n")
+        stderr.write("Failed to get attribute. Error\n")
 
 
 def cmds_add_attr(*args, **kwargs):
     try:
         return cmds.addAttr(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Failed to add attribute. Error: {ex} \n")
+        stderr.write("Failed to add attribute. Error\n")
 
 
 def cmds_xform(*args, **kwargs):
     try:
         return cmds.xform(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Transformation failed. Error: {ex} \n")
+        stderr.write("Transformation failed. Error\n")
 
 
 def cmds_space_locator(**kwargs):
     try:
         return cmds.spaceLocator(**kwargs)
     except Exception as ex:
-        stderr.write(f"Setting locator failed. Error: {ex} \n")
+        stderr.write("Setting locator failed. Error\n")
 
 
 def cmds_delete(*args):
     try:
         cmds.delete(*args)
     except Exception as ex:
-        stderr.write(f"Deletion failed. Error: {ex} \n")
+        stderr.write("Deletion failed. Error\n")
 
 
 def cmds_set_driven_keyframe(*args, **kwargs):
     try:
         cmds.setDrivenKeyframe(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Setting driven keyframe failed. Error: {ex} \n")
+        stderr.write("Setting driven keyframe failed. Error\n")
 
 
 def cmds_rename(old_name, new_name):
     try:
         cmds.rename(old_name, new_name)
     except Exception as ex:
-        stderr.write(f"Renaming failed. Error: {ex} \n")
+        stderr.write("Renaming failed. Error \n")
 
 
 def cmds_select(*args, **kwargs):
     try:
         cmds.select(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Select command failed. Error: {ex} \n")
+        stderr.write("Select command failed. Error\n")
 
 
 def cmds_cluster(**kwargs):
     try:
         cmds.cluster(**kwargs)
     except Exception as ex:
-        stderr.write(f"Cluster command failed. Error: {ex} \n")
+        stderr.write("Cluster command failed. Error\n")
 
 
 def cmds_curve(**kwargs):
     try:
         cmds.curve(**kwargs)
     except Exception as ex:
-        stderr.write(f"Curve command failed. Error: {ex} \n")
+        stderr.write("Curve command failed. Error\n")
 
 
 def cmds_parent_constraint(*args, **kwargs):
     try:
         cmds.parentConstraint(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Parent constraint command failed. Error: {ex} \n")
+        stderr.write("Parent constraint command failed. Error\n")
 
 
 def cmds_aim_constraint(*args, **kwargs):
     try:
         cmds.aimConstraint(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Aim constraint command failed. Error: {ex} \n")
+        stderr.write("Aim constraint command failed. Error\n")
 
 
 def cmds_orient_constraint(*args, **kwargs):
     try:
         return cmds.orientConstraint(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Orient constraint command failed. Error: {ex} \n")
+        stderr.write("Orient constraint command failed. Error\n")
 
 
 def cmds_point_constraint(target, object):
     try:
         cmds.pointConstraint(target, object)
     except Exception as ex:
-        stderr.write(f"Point constraint command failed. Error: {ex} \n")
+        stderr.write("Point constraint command failed. Error\n")
 
 
 def cmds_group(**kwargs):
     try:
         cmds.group(**kwargs)
     except Exception as ex:
-        stderr.write(f"Group command failed. Error: {ex} \n")
+        stderr.write("Group command failed. Error\n")
 
 def cmds_exists(*args, **kwargs):
+    
     try:
         return cmds.objExists(*args, **kwargs)
     except Exception as ex:
-        stderr.write(f"Failed to parent. Error: {ex} \n")
+        stderr.write("Failed to parent. Error\n")
