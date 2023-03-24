@@ -27,7 +27,6 @@ class MeshNeutral:
     def prepare_mesh(config, dna, data):
 
         logging.info("==============================")
-        logging.info("building mesh with mesh_index:"+config.mesh_index)
 
         data.dna_vertex_positions = dna.get_vertex_positions_for_mesh_index(
             config.mesh_index
@@ -50,13 +49,11 @@ class MeshNeutral:
             data.polygon_faces,
             data.polygon_connects,
         )
-
         return fn_mesh, mesh_object
 
     @staticmethod
     def rename_mesh(config, dna, mesh_object):
         mesh_name = dna.get_mesh_name(config.mesh_index)
-        logging.info("naming mesh to:"+ mesh_name)
 
         dag_modifier = MDagModifier()
         dag_modifier.renameNode(mesh_object, mesh_name)
@@ -101,7 +98,6 @@ class MeshNeutral:
             texture_coordinate_vs,
             texture_coordinate_indices,
         ) = MeshNeutral.get_texture_data(config.mesh_index, dna)
-
         fn_mesh.setUVs(texture_coordinate_us, texture_coordinate_vs)
         fn_mesh.assignUVs(data.polygon_faces, texture_coordinate_indices)
 

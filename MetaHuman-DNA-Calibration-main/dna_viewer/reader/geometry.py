@@ -110,7 +110,7 @@ class Geometry:
         for blend_shape_target_index in range(blend_shape_target_count):
             if (blend_shape_target_index + 1) % BLEND_SHAPE_PRINT_RANGE == 0:
                 logging.info(
-                    "\t"+str(blend_shape_target_index + 1)+"/"+blend_shape_target_count
+                    "\t"+str(blend_shape_target_index + 1)+"/"+str(blend_shape_target_count)
                 )
 
             mesh.blend_shapes.append(
@@ -123,4 +123,4 @@ class Geometry:
             )
 
         if blend_shape_target_count % BLEND_SHAPE_PRINT_RANGE != 0:
-            logging.info("\t"+str(blend_shape_target_count)+"/"+blend_shape_target_count)
+            logging.info("\t"+str(blend_shape_target_count)+"/"+str(blend_shape_target_count))

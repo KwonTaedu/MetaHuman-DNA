@@ -35,7 +35,7 @@ class MeshBlendShape:
         blend_shapes = dna.get_blend_shapes(config.mesh_index)
         for blend_shape_target_index, blend_shape in enumerate(blend_shapes):
             if (blend_shape_target_index + 1) % BLEND_SHAPE_PRINT_RANGE == 0:
-                logging.info("\t"+str(blend_shape_target_index+1) +"/" +len(blend_shapes))
+                logging.info("\t"+str(blend_shape_target_index+1) +"/" +str(len(blend_shapes)))
                                 
 
             MeshBlendShape._create_derived_mesh(
@@ -51,7 +51,7 @@ class MeshBlendShape:
             )
 
         if len(blend_shapes) % BLEND_SHAPE_PRINT_RANGE != 0:
-            logging.info("\t"+str(blend_shapes) +"/" +len(blend_shapes))
+            logging.info("\t"+str(len(blend_shapes)) +"/" +str(len(blend_shapes)))
 
         cmds.setAttr(group+".visibility", 0)
 
