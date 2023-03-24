@@ -28,14 +28,14 @@ class BuildOptions():
         self.add_mesh_name_to_blend_shape_channel_name = add_mesh_name_to_blend_shape_channel_name
 
 class Character():
-    def __init__(self, dna=None, options=BuildOptions(), modifiers=SpaceModifiers(), meshes=[], rig_logic_config=None,
+    def __init__(self, dna=None, options=None, modifiers=None, meshes=None, rig_logic_config=None,
                  gui_options=None, analog_gui_options=None, create_character_node=True, create_display_layers=True,
                  aas=None):
          
         self.dna = dna 
-        self.options = options 
-        self.modifiers = modifiers 
-        self.meshes = meshes 
+        self.options = options if options else BuildOptions()
+        self.modifiers = modifiers if modifiers else SpaceModifiers()
+        self.meshes = meshes if meshes else []
         self.rig_logic_config = rig_logic_config 
         self.gui_options = gui_options 
         self.analog_gui_options = analog_gui_options 

@@ -9,12 +9,12 @@ from ..util.error import DNAViewerError
 
 
 class CharacterBuildResult:
-    def __init__(self,nodes = {}):
-        self.nodes = nodes
+    def __init__(self,nodes = None):
+        self.nodes = nodes if nodes else {}
 
     @staticmethod
-    def create(nodes = {}):
-
+    def create(nodes = None):
+        nodes if nodes else {}
         result = CharacterBuildResult()
         result.nodes = nodes
         return result
@@ -43,7 +43,7 @@ class Character:
         creator.add_key_frames()
         creator.create_geometry_node()
         creator.create_rig_node()
-        creator.create_character_meshes()
+        creator.create_character_meshes() #
 
         creator.add_gui()
         creator.add_analog_gui()

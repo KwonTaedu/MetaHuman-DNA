@@ -37,10 +37,10 @@ class SkinWeightsData:
 
 
 class Mesh:
-    def __init__(self,name = None,topology = Topology(), skin_weights = SkinWeightsData(), blend_shapes = None):
+    def __init__(self,name = None,topology = None, skin_weights = None, blend_shapes = None):
         self.name = name
-        self.topology = topology
-        self.skin_weights = skin_weights
+        self.topology = topology if topology else Topology() 
+        self.skin_weights = skin_weights if skin_weights else SkinWeightsData()
         self.blend_shapes = blend_shapes if blend_shapes else []
 
 class Geometry:
