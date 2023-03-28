@@ -1,7 +1,11 @@
 from ..const.naming import BLEND_SHAPE_NAME_POSTFIX, FRM_MULTIPLIERS_NAME
 
 class RigLogic:
-    def __init__(self,command = "createEmbeddedNodeRL4",name = "",dna_file_path="",control_naming="<objName>.<attrName>",
+    def __init__(self,command = "createEmbeddedNodeRL4",
+                 name = "",
+                 dna_file_path="",
+                 joint_naming="<objName>.<attrName>",
+                 control_naming="<objName>.<attrName>",
                  blend_shape_naming = "<objName>" + BLEND_SHAPE_NAME_POSTFIX + ".<attrName>",
                  animated_map_naming = FRM_MULTIPLIERS_NAME + ".<objName>_<attrName>"
                  ):
@@ -9,6 +13,7 @@ class RigLogic:
         self.name = name
         self.dna_file_path = dna_file_path
         self.control_naming = control_naming
+        self.joint_naming = joint_naming
         self.blend_shape_naming = blend_shape_naming
         self.animated_map_naming = animated_map_naming
         

@@ -71,7 +71,7 @@ class Character():
         self.analog_gui_options = analog_gui_config
         return self
 
-    def with_analog_gui_path(self, analog_gui_path):
+    def with_analog_gui_path(self, analog_gui_path = None):
         self.analog_gui_options = AnalogGui(gui_path=analog_gui_path)
         return self
 
@@ -104,7 +104,7 @@ class Character():
         self.modifiers.angle_modifier = modifier
         return self
 
-    def with_rig_logic(self, rig_logic_node_config):
+    def with_rig_logic(self, rig_logic_node_config = None):
 
         self.rig_logic_config = rig_logic_node_config or RigLogic()
         return self
@@ -112,6 +112,7 @@ class Character():
     def with_additional_assembly_script(self, aas_config):
 
         if aas_config.path is None:
+            print("ass_config_error")
             return self
 
         if aas_config.module_name is None:
