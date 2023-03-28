@@ -14,14 +14,9 @@ class Import:
             and os.path.isfile(path)
             and os.path.splitext(path)[1] == ".py"
         ):
-            # spec = spec_from_loader(name, SourceFileLoader(name, path))
-            # module = module_from_spec(spec)
-            # spec.loader.exec_module(module)
-
             module = imp.load_source(name, path)
 
             return module
         raise DNAViewerError("File"+ path+" is not found!")
     
-
-
+ 

@@ -5,10 +5,9 @@ from ..model.joint import Joint as JointModel
 
 class Joint:
     def __init__(self, joints, linear_modifier, angle_modifier):
-        self.joints = joints
+        self.joints = joints 
         self.linear_modifier = linear_modifier
         self.angle_modifier = angle_modifier
-
         self.joint_flags = {}
 
         for joint in self.joints:

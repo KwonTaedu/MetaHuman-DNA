@@ -238,9 +238,8 @@ class CharacterCreator:
             cmds.parent(group_name, RIG_HOLDER_PREFIX+self.character_name)
 
     def add_rig_logic_node(self):
-
         RigLogic.add_rig_logic(config=self.config, character_name=self.character_name)
-
+        
     def run_additional_assembly_script(self):
 
         AdditionalAssemblyScript.run_additional_assembly_script(config=self.config)

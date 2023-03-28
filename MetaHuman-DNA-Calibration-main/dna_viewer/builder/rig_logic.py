@@ -15,7 +15,7 @@ class RigLogic:
             raise DNAViewerError("Must provide a DNA file path")
 
         string_to_be_executed = self.config.command
-        string_to_be_executed += " -n '"+self.config.name+"'"
+        string_to_be_executed += ' -n "'+self.config.name+'"'
         string_to_be_executed += ' -dfp "'+self.config.dna_file_path+'"'
         string_to_be_executed += ' -cn "'+self.config.control_naming+'"'
         string_to_be_executed += ' -jn "'+self.config.joint_naming+'"'
