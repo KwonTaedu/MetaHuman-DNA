@@ -843,7 +843,6 @@ def clean_up():
     cmds_group(parent="headRig_grp", empty=True, name="headRigging_grp")
     cmds_group(parent="headRig_grp", empty=True, name="headGui_grp")
     cmds_group(parent="headRigging_grp", empty=True, name="eyesSetup_grp")
-
     cmds_group(parent="head_grp", empty=True, name="morphs_grp")
     cmds_set_attr("morphs_grp.visibility", 0)
     if cmds.ls("corrective_*"):
@@ -860,6 +859,7 @@ def clean_up():
             if obj_type not in ("clusterHandle", "cluster", "animCurveUU"):
                 cmds_parent(cmd, "eyesSetup_grp")
         cmds_parent("LOC_C_eyeDriver", "eyesSetup_grp")  # eyes setup
+        cmds_parent("eyesSetup_grp","headRigging_grp")
         cmds_parent_constraint(["FACIAL_C_FacialRoot", "LOC_C_eyeDriver"], maintainOffset=True)
         cmds_parent("spine_04", "head_grp")
         cmds_delete("gui")
@@ -1094,7 +1094,9 @@ def cmds_parent(*args, **kwargs):
     try:
         return cmds.parent(*args, **kwargs)
     except Exception as ex:
-        stderr.write("Failed to parent. Error\n")
+        stderr.write("Failed to parent. Error")
+        stderr.write(args)
+        stderr.write("\n")
 
 
 def cmds_set_attr(*args, **kwargs):
